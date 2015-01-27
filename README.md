@@ -2,6 +2,8 @@
 
 defekt is custom errors made simple.
 
+![defekt](https://github.com/thenativeweb/defekt/raw/master/images/logo.jpg "defekt")
+
 ## Installation
 
     $ npm install defekt
