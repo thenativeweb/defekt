@@ -8,19 +8,19 @@ var defekt = require('../lib/defekt');
 
 suite('defekt', function () {
   test('is a function.', function (done) {
-    assert.that(defekt, is.ofType('function'));
+    assert.that(defekt).is.ofType('function');
     done();
   });
 
   test('throws an error if error names are missing.', function (done) {
     assert.that(function () {
       defekt();
-    }, is.throwing('Error names are missing.'));
+    }).is.throwing('Error names are missing.');
     done();
   });
 
   test('returns an object.', function (done) {
-    assert.that(defekt([ 'InvalidOperation' ]), is.ofType('object'));
+    assert.that(defekt([ 'InvalidOperation' ])).is.ofType('object');
     done();
   });
 
@@ -28,8 +28,8 @@ suite('defekt', function () {
     test('contains the specified errors.', function (done) {
       var errors = defekt([ 'InvalidOperation', 'ArgumentNull' ]);
 
-      assert.that(errors.InvalidOperation, is.ofType('function'));
-      assert.that(errors.ArgumentNull, is.ofType('function'));
+      assert.that(errors.InvalidOperation).is.ofType('function');
+      assert.that(errors.ArgumentNull).is.ofType('function');
       done();
     });
 
@@ -38,7 +38,7 @@ suite('defekt', function () {
         var errors = defekt([ 'InvalidOperation', 'ArgumentNull' ]);
         var error = new errors.InvalidOperation();
 
-        assert.that(error, is.instanceOf(Error));
+        assert.that(error).is.instanceOf(Error);
         done();
       });
 
@@ -46,7 +46,7 @@ suite('defekt', function () {
         var errors = defekt([ 'InvalidOperation', 'ArgumentNull' ]);
         var error = new errors.InvalidOperation();
 
-        assert.that(util.isError(error), is.true());
+        assert.that(util.isError(error)).is.true();
         done();
       });
 
@@ -55,7 +55,7 @@ suite('defekt', function () {
           var errors = defekt([ 'InvalidOperation', 'ArgumentNull' ]);
           var error = new errors.InvalidOperation();
 
-          assert.that(error.name, is.equalTo('InvalidOperation'));
+          assert.that(error.name).is.equalTo('InvalidOperation');
           done();
         });
       });
@@ -65,7 +65,7 @@ suite('defekt', function () {
           var errors = defekt([ 'InvalidOperation', 'ArgumentNull' ]);
           var error = new errors.InvalidOperation();
 
-          assert.that(error.message, is.equalTo(''));
+          assert.that(error.message).is.equalTo('');
           done();
         });
 
@@ -73,7 +73,7 @@ suite('defekt', function () {
           var errors = defekt([ 'InvalidOperation', 'ArgumentNull' ]);
           var error = new errors.InvalidOperation('foobar');
 
-          assert.that(error.message, is.equalTo('foobar'));
+          assert.that(error.message).is.equalTo('foobar');
           done();
         });
       });
@@ -83,7 +83,7 @@ suite('defekt', function () {
           var errors = defekt([ 'InvalidOperation', 'ArgumentNull' ]);
           var error = new errors.InvalidOperation('foobar');
 
-          assert.that(error.cause, is.undefined());
+          assert.that(error.cause).is.undefined();
           done();
         });
 
@@ -92,7 +92,7 @@ suite('defekt', function () {
           var cause = new errors.ArgumentNull();
           var error = new errors.InvalidOperation('foobar', cause);
 
-          assert.that(error.cause, is.equalTo(cause));
+          assert.that(error.cause).is.equalTo(cause);
           done();
         });
       });
