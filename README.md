@@ -4,6 +4,8 @@ defekt is custom errors made simple.
 
 ![defekt](https://github.com/thenativeweb/defekt/raw/master/images/logo.jpg "defekt")
 
+[![Circle CI](https://circleci.com/gh/thenativeweb/defekt.svg?style=svg)](https://circleci.com/gh/thenativeweb/defekt)
+
 ## Installation
 
     $ npm install defekt

@@ -16,12 +16,16 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "0.4.5",
-    "assertthat": "0.4.2",
-    "tourism": "0.13.2"
+    "assertthat": "0.5.3",
+    "tourism": "0.15.0"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/thenativeweb/defekt.git"
   },
+  "keywords": [
+    "error",
+    "exception"
+  ],
   "license": "MIT"
 }
