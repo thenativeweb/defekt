@@ -16,8 +16,8 @@
   "dependencies": {},
   "devDependencies": {
     "grunt": "0.4.5",
-    "assertthat": "0.5.3",
-    "tourism": "0.15.0"
+    "assertthat": "0.6.0",
+    "tourism": "0.21.0"
   },
   "repository": {
     "type": "git",
