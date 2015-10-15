@@ -13,13 +13,13 @@ defekt is custom errors made simple.
 First you need to add a reference to defekt in your application.
 
 ```javascript
-var defekt = require('defekt');
+const defekt = require('defekt');
 ```
 
 Then call the `defekt` function and hand over an array of custom error names that you would like to have created.
 
 ```javascript
-var errors = defekt([
+const errors = defekt([
   'ArgumentNull',
   'InvalidOperation',
   '...'
@@ -45,6 +45,20 @@ throw new errors.InvalidOperation('Something failed.', new Error(...));
 ```
 
 The custom errors follow the same rules as the built-in ones, i.e. they have a `name` and a `message` property, they derive from `Error` and they can be recognized by the `util.isError` function.
+
+### Defining error codes
+
+Additionally, you may want to provide error codes. For that specify an object with a `name` and a `code` property instead of only providing the error name.
+
+```javascript
+const errors = defekt([
+  { name: 'ArgumentNull', code: 'ARGNULL' },
+  { name: 'InvalidOperation', code: 'INVALOP' },
+  { name: '...', code: '...' }
+]);
+```
+
+Please note that you can mix both definition types arbitrarily.
 
 ## Running the build
 
