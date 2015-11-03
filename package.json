@@ -19,6 +19,18 @@
     "assertthat": "0.6.0",
     "tourism": "0.21.0"
   },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/thenativeweb/defekt.git"
