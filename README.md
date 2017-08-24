@@ -6,7 +6,7 @@ defekt is custom errors made simple.
 
 ## Installation
 
-```bash
+```shell
 $ npm install defekt
 ```
 
@@ -50,7 +50,9 @@ The custom errors follow the same rules as the built-in ones, i.e. they have a `
 
 ### Defining error codes
 
-Additionally, you may want to provide error codes. For that specify an object with a `name` and a `code` property instead of only providing the error name.
+By default, each custom error uses its uppercased name with an `E` prefix as error code. E.g., an `InvalidOperation` error uses `EINVALIDOPERATION` as its code.
+
+From time to time, you may want to provide custom error codes. For that specify an object with a `name` and a `code` property instead of only providing the error name.
 
 ```javascript
 const errors = defekt([
@@ -66,7 +68,7 @@ Please note that you can mix both definition types arbitrarily.
 
 To build this module use [roboter](https://www.npmjs.com/package/roboter).
 
-```bash
+```shell
 $ bot
 ```
 

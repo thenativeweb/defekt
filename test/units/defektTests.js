@@ -61,11 +61,11 @@ suite('defekt', () => {
       });
 
       suite('code', () => {
-        test('is undefined by default.', done => {
+        test('is the E-prefixed upper-cased name by default.', done => {
           const errors = defekt([ 'InvalidOperation', 'ArgumentNull' ]);
           const error = new errors.InvalidOperation();
 
-          assert.that(error.code).is.undefined();
+          assert.that(error.code).is.equalTo('EINVALIDOPERATION');
           done();
         });
 

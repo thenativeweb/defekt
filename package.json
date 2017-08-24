@@ -10,6 +10,10 @@
     {
       "name": "Matthias Wagler",
       "email": "matthias.wagler@thenativeweb.io"
+    },
+    {
+      "name": "Michael Scherer",
+      "email": "mail@michael-scherer.net"
     }
   ],
   "main": "dist/defekt.js",
@@ -17,9 +21,9 @@
     "inherits": "2.0.3"
   },
   "devDependencies": {
-    "assertthat": "0.8.3",
-    "roboter": "0.14.6",
-    "roboter-server": "0.14.6"
+    "assertthat": "0.10.3",
+    "roboter": "0.15.4",
+    "roboter-server": "0.15.4"
   },
   "repository": {
     "type": "git",
