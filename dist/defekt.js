@@ -12,12 +12,20 @@ var defekt = function defekt(errorDefinitions) {
   var errors = {};
 
   errorDefinitions.forEach(function (errorDefinition) {
-    var errorName = errorDefinition;
+    var errorName = void 0;
     var errorCode = void 0;
 
-    if ((typeof errorDefinition === 'undefined' ? 'undefined' : _typeof(errorDefinition)) === 'object') {
-      errorName = errorDefinition.name;
-      errorCode = errorDefinition.code;
+    switch (typeof errorDefinition === 'undefined' ? 'undefined' : _typeof(errorDefinition)) {
+      case 'string':
+        errorName = errorDefinition;
+        errorCode = 'E' + errorDefinition.toUpperCase();
+        break;
+      case 'object':
+        errorName = errorDefinition.name;
+        errorCode = errorDefinition.code;
+        break;
+      default:
+        throw new Error('Invalid error definition.');
     }
 
     var CustomError = function CustomError(message, cause) {
