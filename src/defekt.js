@@ -1,5 +1,7 @@
 'use strict';
 
+const humanizeString = require('humanize-string');
+
 const defekt = function (errorDefinitions) {
   if (!errorDefinitions) {
     throw new Error('Error names are missing.');
@@ -25,7 +27,7 @@ const defekt = function (errorDefinitions) {
     }
 
     class CustomError extends Error {
-      constructor (message = '', cause) {
+      constructor (message = `${humanizeString(errorName)}.`, cause) {
         super();
 
         this.name = errorName;

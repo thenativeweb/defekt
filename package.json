@@ -17,11 +17,12 @@
     }
   ],
   "main": "dist/defekt.js",
-  "dependencies": {},
+  "dependencies": {
+    "humanize-string": "1.0.2"
+  },
   "devDependencies": {
     "assertthat": "1.0.0",
-    "roboter": "0.15.6",
-    "roboter-server": "0.15.6"
+    "roboter": "1.1.0"
   },
   "repository": {
     "type": "git",
