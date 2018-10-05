@@ -1,12 +1,28 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _typeof2 = require('babel-runtime/helpers/typeof');
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var humanizeString = require('humanize-string');
 
 var defekt = function defekt(errorDefinitions) {
   if (!errorDefinitions) {
@@ -19,7 +35,7 @@ var defekt = function defekt(errorDefinitions) {
     var errorName = void 0;
     var errorCode = void 0;
 
-    switch (typeof errorDefinition === 'undefined' ? 'undefined' : _typeof(errorDefinition)) {
+    switch (typeof errorDefinition === 'undefined' ? 'undefined' : (0, _typeof3.default)(errorDefinition)) {
       case 'string':
         errorName = errorDefinition;
         errorCode = 'E' + errorDefinition.toUpperCase();
@@ -33,15 +49,14 @@ var defekt = function defekt(errorDefinitions) {
     }
 
     var CustomError = function (_Error) {
-      _inherits(CustomError, _Error);
+      (0, _inherits3.default)(CustomError, _Error);
 
       function CustomError() {
-        var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+        var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : humanizeString(errorName) + '.';
         var cause = arguments[1];
+        (0, _classCallCheck3.default)(this, CustomError);
 
-        _classCallCheck(this, CustomError);
-
-        var _this = _possibleConstructorReturn(this, (CustomError.__proto__ || Object.getPrototypeOf(CustomError)).call(this));
+        var _this = (0, _possibleConstructorReturn3.default)(this, (CustomError.__proto__ || (0, _getPrototypeOf2.default)(CustomError)).call(this));
 
         _this.name = errorName;
         _this.code = errorCode;
