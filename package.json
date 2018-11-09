@@ -18,11 +18,12 @@
   ],
   "main": "dist/defekt.js",
   "dependencies": {
+    "@babel/runtime": "7.1.5",
     "humanize-string": "1.0.2"
   },
   "devDependencies": {
-    "assertthat": "1.0.0",
-    "roboter": "1.1.0"
+    "assertthat": "2.0.0",
+    "roboter": "2.2.0"
   },
   "repository": {
     "type": "git",
