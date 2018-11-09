@@ -1,26 +1,18 @@
 'use strict';
 
-var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
 
-var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
 
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
 
-var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+var _wrapNativeSuper2 = _interopRequireDefault(require("@babel/runtime/helpers/wrapNativeSuper"));
 
-var _inherits2 = require('babel-runtime/helpers/inherits');
-
-var _inherits3 = _interopRequireDefault(_inherits2);
-
-var _typeof2 = require('babel-runtime/helpers/typeof');
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _typeof2 = _interopRequireDefault(require("@babel/runtime/helpers/typeof"));
 
 var humanizeString = require('humanize-string');
 
@@ -30,34 +22,37 @@ var defekt = function defekt(errorDefinitions) {
   }
 
   var errors = {};
-
   errorDefinitions.forEach(function (errorDefinition) {
-    var errorName = void 0;
-    var errorCode = void 0;
+    var errorName;
+    var errorCode;
 
-    switch (typeof errorDefinition === 'undefined' ? 'undefined' : (0, _typeof3.default)(errorDefinition)) {
+    switch ((0, _typeof2.default)(errorDefinition)) {
       case 'string':
         errorName = errorDefinition;
-        errorCode = 'E' + errorDefinition.toUpperCase();
+        errorCode = "E".concat(errorDefinition.toUpperCase());
         break;
+
       case 'object':
         errorName = errorDefinition.name;
         errorCode = errorDefinition.code;
         break;
+
       default:
         throw new Error('Invalid error definition.');
     }
 
-    var CustomError = function (_Error) {
-      (0, _inherits3.default)(CustomError, _Error);
+    var CustomError =
+    /*#__PURE__*/
+    function (_Error) {
+      (0, _inherits2.default)(CustomError, _Error);
 
       function CustomError() {
-        var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : humanizeString(errorName) + '.';
-        var cause = arguments[1];
-        (0, _classCallCheck3.default)(this, CustomError);
+        var _this;
 
-        var _this = (0, _possibleConstructorReturn3.default)(this, (CustomError.__proto__ || (0, _getPrototypeOf2.default)(CustomError)).call(this));
-
+        var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "".concat(humanizeString(errorName), ".");
+        var cause = arguments.length > 1 ? arguments[1] : undefined;
+        (0, _classCallCheck2.default)(this, CustomError);
+        _this = (0, _possibleConstructorReturn2.default)(this, (0, _getPrototypeOf2.default)(CustomError).call(this));
         _this.name = errorName;
         _this.code = errorCode;
         _this.message = message;
@@ -66,11 +61,10 @@ var defekt = function defekt(errorDefinitions) {
       }
 
       return CustomError;
-    }(Error);
+    }((0, _wrapNativeSuper2.default)(Error));
 
     errors[errorName] = CustomError;
   });
-
   return errors;
 };
 
