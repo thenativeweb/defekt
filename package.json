@@ -16,14 +16,13 @@
       "email": "mail@michael-scherer.net"
     }
   ],
-  "main": "dist/defekt.js",
+  "main": "lib/defekt.js",
   "dependencies": {
-    "@babel/runtime": "7.1.5",
-    "humanize-string": "1.0.2"
+    "humanize-string": "2.1.0"
   },
   "devDependencies": {
-    "assertthat": "2.0.0",
-    "roboter": "2.2.0"
+    "assertthat": "3.2.0",
+    "roboter": "6.1.0"
   },
   "repository": {
     "type": "git",

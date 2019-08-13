@@ -4,7 +4,7 @@ const util = require('util');
 
 const assert = require('assertthat');
 
-const defekt = require('../../src/defekt');
+const defekt = require('../../lib/defekt');
 
 suite('defekt', () => {
   test('is a function.', async () => {
