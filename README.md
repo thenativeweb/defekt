@@ -34,13 +34,13 @@ If you use TypeScript, use the following code instead:
 import defekt from 'defekt';
 ```
 
-Then call the `defekt` function and hand over an object of custom error configurations that you would like to have created:
+Then call the `defekt` function and hand over an object of custom error configurations that you would like to have created. In this object each key is the name for an error and the corresponding value is the error's configuration.
 
 ```javascript
 const errors = defekt({
   ArgumentNull: {},
   InvalidOperation: {},
-  // name: config
+  // ...
 });
 ```
 
@@ -79,13 +79,13 @@ The custom errors follow the same rules as the built-in ones, i.e. they have a `
 
 By default, each custom error uses its uppercased name with an `E` prefix as error code. E.g., an `InvalidOperation` error uses `EINVALIDOPERATION` as its code.
 
-From time to time, you may want to provide custom error codes. For that specify a `code` property on the configuration objects:
+From time to time, you may want to provide custom error codes. For that specify a `code` property on the configuration object:
 
 ```javascript
 const errors = defekt({
   ArgumentNull: { code: 'ARGNULL' },
-  InvalidOperation: { code: 'INVALOP' },
-  ...: { code: '...' }
+  InvalidOperation: { code: 'INVALOP' }
+  // ...
 });
 ```
 
