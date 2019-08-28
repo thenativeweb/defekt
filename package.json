@@ -14,15 +14,20 @@
     {
       "name": "Michael Scherer",
       "email": "mail@michael-scherer.net"
+    },
+    {
+      "name": "Hannes Leutloff",
+      "email": "hannes.leutloff@thenativeweb.io"
     }
   ],
-  "main": "lib/defekt.js",
+  "main": "build/lib/defekt.js",
+  "types": "build/lib/defekt.d.ts",
   "dependencies": {
     "humanize-string": "2.1.0"
   },
   "devDependencies": {
-    "assertthat": "3.2.0",
-    "roboter": "6.1.0"
+    "assertthat": "4.0.1",
+    "roboter": "7.1.0"
   },
   "repository": {
     "type": "git",
