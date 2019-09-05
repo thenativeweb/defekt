@@ -26,7 +26,7 @@
     "humanize-string": "2.1.0"
   },
   "devDependencies": {
-    "assertthat": "4.0.1",
+    "assertthat": "4.0.2",
     "roboter": "7.1.5"
   },
   "repository": {
