@@ -35,7 +35,9 @@ const defekt = function <TErrorDefinition extends {
 
       public cause?: Error;
 
+      /* eslint-disable default-param-last */
       public constructor (message = `${humanizeString(errorName)}.`, cause?: Error) {
+        /* eslint-enable default-param-last */
         super();
 
         this.name = errorName;
