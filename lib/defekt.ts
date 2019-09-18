@@ -20,10 +20,6 @@ const defekt = function <TErrorDefinition extends {
   for (const errorName in errorDefinitions) {
     const errorDefinition = errorDefinitions[errorName];
 
-    if (!errorDefinition) {
-      continue;
-    }
-
     const { code = `E${errorName.toUpperCase()}` } = errorDefinition;
 
     errors[errorName] = class extends Error implements CustomError {
