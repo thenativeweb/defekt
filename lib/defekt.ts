@@ -1,15 +1,6 @@
+import { CustomError } from './CustomError';
+import { ErrorConstructors } from './ErrorConstructors';
 import humanizeString from 'humanize-string';
-
-export interface CustomError extends Error {
-  name: string;
-  code: string;
-  message: string;
-  cause?: Error;
-}
-
-type ErrorConstructors<TError> = {
-  [TKey in keyof TError]: new(message?: string, cause?: Error) => CustomError
-};
 
 const defekt = function <TErrorDefinition extends {
   [ key: string ]: { code?: string };
@@ -31,8 +22,16 @@ const defekt = function <TErrorDefinition extends {
 
       public cause?: Error;
 
+      public data?: any;
+
       /* eslint-disable default-param-last */
-      public constructor (message = `${humanizeString(errorName)}.`, cause?: Error) {
+      public constructor (message = `${humanizeString(errorName)}.`, {
+        cause,
+        data
+      }: {
+        cause?: Error;
+        data?: any;
+      } = {}) {
         /* eslint-enable default-param-last */
         super();
 
@@ -40,6 +39,7 @@ const defekt = function <TErrorDefinition extends {
         this.code = code;
         this.message = message;
         this.cause = cause;
+        this.data = data;
       }
     };
   }

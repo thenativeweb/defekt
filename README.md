@@ -67,10 +67,20 @@ If you want to specify a custom message, feel free to do so:
 throw new errors.InvalidOperation('Something failed.');
 ```
 
-Additionally, if an error was caused by another error, you can specify this error as the second parameter:
+Additionally, if an error was caused by another error, you can specify this error using the `cause` property:
 
 ```javascript
-throw new errors.InvalidOperation('Something failed.', new Error(...));
+throw new errors.InvalidOperation('Something failed.', {
+  cause: new Error(...)
+});
+```
+
+From time to time, you may need to provide additional data for an error. For this, you can use the `data` property:
+
+```javascript
+throw new errors.InvalidOperation('Something failed.', {
+  data: { ... }
+});
 ```
 
 The custom errors follow the same rules as the built-in ones, i.e. they have a `name` and a `message` property, they derive from `Error` and they can be recognized by the `util.isError` function.

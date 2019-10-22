@@ -81,9 +81,25 @@ suite('defekt', (): void => {
         test('contains the given inner error.', async (): Promise<void> => {
           const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
           const cause = new errors.ArgumentNull();
-          const error = new errors.InvalidOperation('foobar', cause);
+          const error = new errors.InvalidOperation('foobar', { cause });
 
           assert.that(error.cause).is.equalTo(cause);
+        });
+      });
+
+      suite('data', (): void => {
+        test('is undefined if no data is given.', async (): Promise<void> => {
+          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
+          const error = new errors.InvalidOperation('foobar');
+
+          assert.that(error.data).is.undefined();
+        });
+
+        test('contains the given data.', async (): Promise<void> => {
+          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
+          const error = new errors.InvalidOperation('foobar', { data: { foo: 'bar' }});
+
+          assert.that(error.data).is.equalTo({ foo: 'bar' });
         });
       });
     });
