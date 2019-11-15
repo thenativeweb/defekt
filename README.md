@@ -25,13 +25,13 @@ $ npm install defekt
 First you need to add a reference to defekt in your application:
 
 ```javascript
-const defekt = require('defekt').default;
+const { defekt } = require('defekt');
 ```
 
 If you use TypeScript, use the following code instead:
 
 ```typescript
-import defekt from 'defekt';
+import { defekt } from 'defekt';
 ```
 
 Then call the `defekt` function and hand over an object of custom error configurations that you would like to have created. In this object each key is the name for an error and the corresponding value is the error's configuration.

@@ -20,13 +20,13 @@
       "email": "hannes.leutloff@thenativeweb.io"
     }
   ],
-  "main": "build/lib/index.js",
-  "types": "build/lib/index.d.ts",
+  "main": "build/lib/defekt.js",
+  "types": "build/lib/defekt.d.ts",
   "dependencies": {
     "humanize-string": "2.1.0"
   },
   "devDependencies": {
-    "assertthat": "4.0.2",
+    "assertthat": "5.0.1",
     "roboter": "9.2.0"
   },
   "repository": {
