@@ -99,6 +99,25 @@ const errors = defekt({
 });
 ```
 
+### Grouping errors
+
+Over time you may get more and more error definitions, which results in a lengthy `errors` object. To group errors, add appropriate properties to the `errors` object and call the `defekt` function multiple times:
+
+```javascript
+const errors = {
+  common: defekt({
+    ArgumentNull: {},
+    InvalidOperation: {}
+    // ...
+  }),
+
+  http: defekt({
+    BadRequest: {}
+    // ...
+  })
+};
+```
+
 ## Running the build
 
 To build this module use [roboter](https://www.npmjs.com/package/roboter):
