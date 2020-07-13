@@ -1,8 +1,14 @@
 import { CustomError } from './CustomError';
 
-export type ErrorConstructors<TError> = {
-  [TKey in keyof TError]: new(message?: string, { cause, data }?: {
+interface ErrorConstructor {
+  new(message?: string, { cause, data }?: {
     cause?: Error;
     data?: any;
-  }) => CustomError
+  }): CustomError;
+
+  code: string;
+}
+
+export type ErrorConstructors<TError> = {
+  [TKey in keyof TError]: ErrorConstructor
 };
