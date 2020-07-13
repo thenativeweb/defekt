@@ -103,5 +103,15 @@ suite('defekt', (): void => {
         });
       });
     });
+
+    suite('static error code', (): void => {
+      test('exposes error code as static property on constructor.', async (): Promise<void> => {
+        const errors = defekt({
+          InvalidOperation: {}
+        });
+
+        assert.that(errors.InvalidOperation.code).is.equalTo('EINVALIDOPERATION');
+      });
+    });
   });
 });

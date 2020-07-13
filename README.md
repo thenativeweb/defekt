@@ -118,6 +118,46 @@ const errors = {
 };
 ```
 
+### Comparing errors
+
+To tell your errors apart, you sometimes want to compare them - usually based on their error code. To prevent you from using magic strings all over your application, you can use the static `code` property on the error constructors:
+
+```javascript
+const errors = defekt({
+  ArgumentNull: {},
+  InvalidOperation: {}
+  // ...
+});
+
+const error = new errors.InvalidOperation();
+
+if (error.code === errors.InvalidOperation.code) {
+  // ...
+}
+```
+
+Alternatively, if you catch your error from somewhere and there are multiple options, you can use the error codes in a `switch` construct:
+
+```javascript
+try {
+  // ...
+} catch (ex) {
+  switch (ex.code) {
+    case errors.ArgumentNull.code: {
+      // ...
+      break;
+    }
+    case errors.InvalidOperation.code: {
+      // ...
+      break;
+    }
+    default: {
+      throw ex;
+    }
+  }
+}
+```
+
 ## Running the build
 
 To build this module use [roboter](https://www.npmjs.com/package/roboter):
