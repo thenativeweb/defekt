@@ -105,7 +105,7 @@ suite('defekt', (): void => {
     });
 
     suite('static error code', (): void => {
-      test('exposes error code as static property on constructor.', async (): Promise<void> => {
+      test('exposes the error code as static property on constructor.', async (): Promise<void> => {
         const errors = defekt({
           InvalidOperation: {}
         });
