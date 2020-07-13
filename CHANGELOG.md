@@ -1,3 +1,10 @@
+# [5.1.0](https://github.com/thenativeweb/defekt/compare/5.0.1...5.1.0) (2020-07-13)
+
+
+### Features
+
+* Add static error code to error constructors. ([#148](https://github.com/thenativeweb/defekt/issues/148)) ([b20351a](https://github.com/thenativeweb/defekt/commit/b20351a0707d1b0ec3ad9c4b6b283ee8a1382a46))
+
 ## [5.0.1](https://github.com/thenativeweb/defekt/compare/5.0.0...5.0.1) (2020-02-03)
 
 
