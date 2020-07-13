@@ -120,7 +120,7 @@ const errors = {
 
 ### Comparing errors
 
-To tell your errors apart, you sometimes want to compare them - usually based on their error code. To prevent you from using magic strings all over your application, you can use the static `code` property on the error constructors:
+To tell your errors apart, you sometimes want to compare them – usually based on their error code. To prevent you from using magic strings all over your application, you can use the static `code` property on the error constructors:
 
 ```javascript
 const errors = defekt({
@@ -136,7 +136,7 @@ if (error.code === errors.InvalidOperation.code) {
 }
 ```
 
-Alternatively, if you catch your error from somewhere and there are multiple options, you can use the error codes in a `switch` construct:
+Alternatively, if you catch an error from somewhere and there are multiple options, you can use the error codes in a `switch` statement:
 
 ```javascript
 try {
