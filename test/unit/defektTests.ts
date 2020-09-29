@@ -1,6 +1,6 @@
 import { assert } from 'assertthat';
 import { defekt } from '../../lib/defekt';
-import util from 'util';
+import { types } from 'util';
 
 suite('defekt', (): void => {
   suite('errors', (): void => {
@@ -19,11 +19,11 @@ suite('defekt', (): void => {
         assert.that(error).is.instanceOf(Error);
       });
 
-      test('is recognized by util.isError.', async (): Promise<void> => {
+      test('is recognized by util.types.isNativeError.', async (): Promise<void> => {
         const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
         const error = new errors.InvalidOperation();
 
-        assert.that(util.isError(error)).is.true();
+        assert.that(types.isNativeError(error)).is.true();
       });
 
       suite('name', (): void => {
