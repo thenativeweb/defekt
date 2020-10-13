@@ -1,5 +1,5 @@
 import { assert } from 'assertthat';
-import { defekt } from '../../lib/defekt';
+import { defekt } from '../../lib';
 import { types } from 'util';
 
 suite('defekt', (): void => {

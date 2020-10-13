@@ -50,4 +50,4 @@ const defekt = function <TErrorDefinition extends {
   return errors as ErrorConstructors<TErrorDefinition>;
 };
 
-export { defekt, CustomError };
+export { defekt };
