@@ -1,3 +1,10 @@
+# [5.2.0](https://github.com/thenativeweb/defekt/compare/5.1.0...5.2.0) (2020-10-13)
+
+
+### Features
+
+* Add isCustomError type predicate. ([#186](https://github.com/thenativeweb/defekt/issues/186)) ([ba37f91](https://github.com/thenativeweb/defekt/commit/ba37f9131e16609d577d8d8c8b675b6d5b63459f))
+
 # [5.1.0](https://github.com/thenativeweb/defekt/compare/5.0.1...5.1.0) (2020-07-13)
 
 

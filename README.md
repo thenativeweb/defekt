@@ -158,6 +158,25 @@ try {
 }
 ```
 
+### Recognizing `CustomError`s
+
+Since version 4.0 TypeScript allows [`unknown` on `catch` clause bindings](https://devblogs.microsoft.com/typescript/announcing-typescript-4-0/#unknown-on-catch). Typing exceptions as `unknown` reduces the assumptions made about their content and forces you to examine your exceptions more closely when handling them. `defekt` provides a type predicate to check for `CustomError`s:
+
+```typescript
+import { isCustomError } from 'defekt';
+
+try {
+  // ...
+} catch (ex: unknown) {
+  if (isCustomError(ex)) {
+    switch (ex.code) {
+      // ...
+    }
+  }
+  // Rethrow or check for other known non-defekt error types here.
+}
+```
+
 ## Running the build
 
 To build this module use [roboter](https://www.npmjs.com/package/roboter):
