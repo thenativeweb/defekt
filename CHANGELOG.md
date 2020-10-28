@@ -1,3 +1,10 @@
+## [5.2.1](https://github.com/thenativeweb/defekt/compare/5.2.0...5.2.1) (2020-10-28)
+
+
+### Bug Fixes
+
+* Update dependencies. ([#191](https://github.com/thenativeweb/defekt/issues/191)) ([ee3a227](https://github.com/thenativeweb/defekt/commit/ee3a227b5a627c844782f5a543e766c53cce496d))
+
 # [5.2.0](https://github.com/thenativeweb/defekt/compare/5.1.0...5.2.0) (2020-10-13)
 
 
