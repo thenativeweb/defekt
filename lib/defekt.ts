@@ -2,9 +2,8 @@ import { CustomError } from './CustomError';
 import { ErrorConstructors } from './ErrorConstructors';
 import humanizeString from 'humanize-string';
 
-const defekt = function <TErrorDefinition extends {
-  [ key: string ]: { code?: string };
-}> (errorDefinitions: TErrorDefinition): ErrorConstructors<TErrorDefinition> {
+const defekt = function <TErrorDefinition extends Record<string, { code?: string }>>
+(errorDefinitions: TErrorDefinition): ErrorConstructors<TErrorDefinition> {
   const errors: Partial<ErrorConstructors<TErrorDefinition>> = {};
 
   /* eslint-disable guard-for-in */
