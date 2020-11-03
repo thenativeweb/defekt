@@ -1,3 +1,10 @@
+## [5.2.2](https://github.com/thenativeweb/defekt/compare/5.2.1...5.2.2) (2020-11-03)
+
+
+### Bug Fixes
+
+* Fix headline for robot section in readme. ([#197](https://github.com/thenativeweb/defekt/issues/197)) ([142d81b](https://github.com/thenativeweb/defekt/commit/142d81b01ba4eb4f2086021c7b76b59dbba9c4a3))
+
 ## [5.2.1](https://github.com/thenativeweb/defekt/compare/5.2.0...5.2.1) (2020-10-28)
 
 
