@@ -2,7 +2,7 @@ import { CustomError } from './CustomError';
 
 interface ErrorConstructor {
   new(message?: string, { cause, data }?: {
-    cause?: Error;
+    cause?: unknown;
     data?: any;
   }): CustomError;
 
