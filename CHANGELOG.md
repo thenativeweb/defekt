@@ -1,3 +1,15 @@
+# [6.0.0](https://github.com/thenativeweb/defekt/compare/5.3.0...6.0.0) (2020-11-26)
+
+
+### Bug Fixes
+
+* Change type of cause to unknown. ([#222](https://github.com/thenativeweb/defekt/issues/222)) ([c79da3f](https://github.com/thenativeweb/defekt/commit/c79da3f0acb2595de65b345625d0485fb59faff1))
+
+
+### BREAKING CHANGES
+
+* So far, `cause` was of type `Error`. Now it is of type `unknown`, which better represents the behavior of JavaScript and TypeScript.
+
 # [5.3.0](https://github.com/thenativeweb/defekt/compare/5.2.2...5.3.0) (2020-11-26)
 
 
