@@ -19,7 +19,7 @@ const defekt = function <TErrorDefinition extends Record<string, { code?: string
 
       public message: string;
 
-      public cause?: Error;
+      public cause?: unknown;
 
       public data?: any;
 
@@ -30,7 +30,7 @@ const defekt = function <TErrorDefinition extends Record<string, { code?: string
         cause,
         data
       }: {
-        cause?: Error;
+        cause?: unknown;
         data?: any;
       } = {}) {
         /* eslint-enable default-param-last */
