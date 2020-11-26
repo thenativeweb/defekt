@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/thenativeweb/defekt/compare/6.0.0...6.0.1) (2020-11-26)
+
+
+### Bug Fixes
+
+* Add readme section regarding `isError`. ([#224](https://github.com/thenativeweb/defekt/issues/224)) ([ec995da](https://github.com/thenativeweb/defekt/commit/ec995da030e2e3707e3bcb216950d434d26c7189))
+
 # [6.0.0](https://github.com/thenativeweb/defekt/compare/5.3.0...6.0.0) (2020-11-26)
 
 
