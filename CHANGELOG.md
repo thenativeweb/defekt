@@ -1,3 +1,10 @@
+# [5.3.0](https://github.com/thenativeweb/defekt/compare/5.2.2...5.3.0) (2020-11-26)
+
+
+### Features
+
+* Add isError function. ([#221](https://github.com/thenativeweb/defekt/issues/221)) ([dfb3f4c](https://github.com/thenativeweb/defekt/commit/dfb3f4c281976ac7c41785d1ee46e080653e243e))
+
 ## [5.2.2](https://github.com/thenativeweb/defekt/compare/5.2.1...5.2.2) (2020-11-03)
 
 
