@@ -179,7 +179,7 @@ try {
 
 ### Recognizing JavaScript `Error`s
 
-In addition to `CustomError`s and helpers related to those, `defekt` provides some tooling to work with native JavaScript `Error`s. Since TypeScript 4.0 caught exceptions can by annotated as `undefined` (see [Typescript 4.0 release notes](https://devblogs.microsoft.com/typescript/announcing-typescript-4-0/#unknown-on-catch)). Our [eslint rules](https://github.com/thenativeweb/eslint-config-es) require us to use `unknown` over `any`, since it is more correct and defensive.
+In addition to `CustomError`s and helpers related to those, `defekt` provides some tooling to work with native JavaScript `Error`s. Since TypeScript 4.0 caught exceptions can be annotated as `unknown` (see [Typescript 4.0 release notes](https://devblogs.microsoft.com/typescript/announcing-typescript-4-0/#unknown-on-catch)). Our [ESLint rules](https://github.com/thenativeweb/eslint-config-es) require us to use `unknown` over `any`, since it is more correct and defensive.
 
 This requires developers to work with type guards to ensure that a caught error is actually an `Error`. Use `isError` for this:
 
