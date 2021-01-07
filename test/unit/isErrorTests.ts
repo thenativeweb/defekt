@@ -3,7 +3,7 @@ import { defekt, isError } from '../../lib';
 
 suite('isError', (): void => {
   test('returns true, if the parameter is an Error.', async (): Promise<void> => {
-    const ex = new Error();
+    const ex = new Error('Something went wrong.');
 
     const result = isError(ex);
 
