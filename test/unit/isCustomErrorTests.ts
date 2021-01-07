@@ -50,7 +50,7 @@ suite('isCustomError', (): void => {
   });
 
   test('returns false, if the parameter is a normal Error.', async (): Promise<void> => {
-    const ex = new Error();
+    const ex = new Error('Something went wrong.');
 
     const result = isCustomError(ex);
 
