@@ -1,6 +1,6 @@
 import { CustomError } from './CustomError';
 import { ErrorConstructors } from './ErrorConstructors';
-import humanizeString from 'humanize-string';
+import { formatErrorMessage } from './formatErrorMessage';
 
 const defekt = function <TErrorDefinition extends Record<string, { code?: string }>>
 (errorDefinitions: TErrorDefinition): ErrorConstructors<TErrorDefinition> {
@@ -26,7 +26,7 @@ const defekt = function <TErrorDefinition extends Record<string, { code?: string
       public static code: string = code;
 
       /* eslint-disable default-param-last */
-      public constructor (message = `${humanizeString(errorName)}.`, {
+      public constructor (message = formatErrorMessage({ errorName }), {
         cause,
         data
       }: {
