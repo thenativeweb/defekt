@@ -18,6 +18,14 @@
     {
       "name": "Hannes Leutloff",
       "email": "hannes.leutloff@thenativeweb.io"
+    },
+    {
+      "name": "Alexander Kampf",
+      "email": "alexander.kampf@thenativeweb.io"
+    },
+    {
+      "name": "Noah Hummel",
+      "email": "noah.hummel@thenativeweb.io"
     }
   ],
   "main": "build/lib/index.js",
