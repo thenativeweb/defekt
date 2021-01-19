@@ -62,6 +62,13 @@ suite('defekt', (): void => {
           assert.that(error.message).is.equalTo('Invalid operation.');
         });
 
+        test('contains the human readable error name for longer names.', async (): Promise<void> => {
+          const errors = defekt({ LongerErrorNameWithMultipleWords: {}});
+          const error = new errors.LongerErrorNameWithMultipleWords();
+
+          assert.that(error.message).is.equalTo('Longer error name with multiple words.');
+        });
+
         test('contains the given message.', async (): Promise<void> => {
           const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
           const error = new errors.InvalidOperation('foobar');
