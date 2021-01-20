@@ -18,13 +18,19 @@
     {
       "name": "Hannes Leutloff",
       "email": "hannes.leutloff@thenativeweb.io"
+    },
+    {
+      "name": "Alexander Kampf",
+      "email": "alexander.kampf@thenativeweb.io"
+    },
+    {
+      "name": "Noah Hummel",
+      "email": "noah.hummel@thenativeweb.io"
     }
   ],
   "main": "build/lib/index.js",
   "types": "build/lib/index.d.ts",
-  "dependencies": {
-    "humanize-string": "2.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "assertthat": "5.2.1",
     "roboter": "11.6.4",
