@@ -1,3 +1,10 @@
+## [6.0.2](https://github.com/thenativeweb/defekt/compare/6.0.1...6.0.2) (2021-01-20)
+
+
+### Bug Fixes
+
+* Replace humanize string with own implementation. ([#250](https://github.com/thenativeweb/defekt/issues/250)) ([da09278](https://github.com/thenativeweb/defekt/commit/da092783b1651a8d537a6e1952d1b890bfadbac2))
+
 ## [6.0.1](https://github.com/thenativeweb/defekt/compare/6.0.0...6.0.1) (2020-11-26)
 
 
