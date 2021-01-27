@@ -1,13 +1,17 @@
 import { CustomError } from './CustomError';
+import { ErrorConstructor } from './ErrorConstructor';
+import { isError } from './isError';
 
-const isCustomError = function (ex: any): ex is CustomError {
+const isCustomError = function <TErrorName extends string>(
+  ex: any,
+  errorType?: ErrorConstructor<TErrorName>
+): ex is CustomError<TErrorName> {
   return (
-    typeof ex === 'object' &&
-    ex !== null &&
-    'message' in ex && typeof ex.message === 'string' &&
-    'name' in ex && typeof ex.name === 'string' &&
-    'code' in ex && typeof ex.code === 'string'
+    isError(ex) &&
+        (errorType === undefined || ex.name === errorType.name)
   );
 };
 
-export { isCustomError };
+export {
+  isCustomError
+};

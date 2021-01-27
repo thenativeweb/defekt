@@ -1,5 +1,6 @@
 import { assert } from 'assertthat';
-import { defekt, isError } from '../../lib';
+import { isError } from '../../lib/isError';
+import { defekt } from '../../lib/defekt';
 
 suite('isError', (): void => {
   test('returns true, if the parameter is an Error.', async (): Promise<void> => {
@@ -11,10 +12,9 @@ suite('isError', (): void => {
   });
 
   test('returns true, if the parameter is a CustomError.', async (): Promise<void> => {
-    const errors = defekt({
-      InvalidOperation: {}
-    });
-    const ex = new errors.InvalidOperation();
+    class TokenInvalid extends defekt('TokenInvalid') {}
+
+    const ex: TokenInvalid = new TokenInvalid();
 
     const result = isError(ex);
 
