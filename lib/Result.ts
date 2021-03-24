@@ -1,77 +1,75 @@
 interface ResultBase<TValue, TError extends Error> {
-  isFail: () => this is Fail<TError>;
-  isOkay: () => this is Okay<TValue>;
+  hasError: () => this is ResultError<TError>;
+  hasValue: () => this is ResultValue<TValue>;
 
-  unpackOrCrash: (handleError?: (oldEx: Error) => Error) => TValue;
-  unpackOrDefault: (defaultValue: TValue) => TValue;
+  unwrapOrThrow: () => TValue;
+  unwrapOrElse: (handleError: (error: Error) => TValue) => TValue;
+  unwrapOrDefault: (defaultValue: TValue) => TValue;
 }
 
-interface Fail<TError extends Error> extends ResultBase<any, TError> {
-  isFailed: true;
+interface ResultError<TError extends Error> extends ResultBase<any, TError> {
   error: TError;
 }
 
-const fail = function <TError extends Error>(error: TError): Fail<TError> {
+const error = function <TError extends Error>(err: TError): ResultError<TError> {
   return {
-    isFail (): boolean {
+    hasError (): boolean {
       return true;
     },
-    isOkay (): boolean {
+    hasValue (): boolean {
       return false;
     },
-    unpackOrCrash (handleError): never {
-      // eslint-disable-next-line unicorn/prefer-ternary
-      if (handleError) {
-        throw handleError(error);
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
-        throw error;
-      }
+    unwrapOrThrow (): never {
+      // eslint-disable-next-line @typescript-eslint/no-throw-literal
+      throw err;
     },
-    unpackOrDefault <TValue>(defaultValue: TValue): TValue {
+    unwrapOrElse <TValue>(handleError: (error: TError) => TValue): TValue {
+      return handleError(err);
+    },
+    unwrapOrDefault <TValue>(defaultValue: TValue): TValue {
       return defaultValue;
     },
-    isFailed: true,
-    error
+    error: err
   };
 };
 
-interface Okay<TValue> extends ResultBase<TValue, any> {
-  isFailed: false;
+interface ResultValue<TValue> extends ResultBase<TValue, any> {
   value: TValue;
 }
 
-const okay: {
-  <TValue extends undefined>(): Okay<TValue>;
-  <TValue>(value: TValue): Okay<TValue>;
-} = function <TValue>(value?: TValue): Okay<TValue | undefined> {
+const value: {
+  <TValue extends undefined>(): ResultValue<TValue>;
+  <TValue>(value: TValue): ResultValue<TValue>;
+} = function <TValue>(val?: TValue): ResultValue<TValue | undefined> {
   return {
-    isFail (): boolean {
+    hasError (): boolean {
       return false;
     },
-    isOkay (): boolean {
+    hasValue (): boolean {
       return true;
     },
-    unpackOrCrash (): TValue | undefined {
-      return value;
+    unwrapOrThrow (): TValue | undefined {
+      return val;
     },
-    unpackOrDefault (): TValue | undefined {
-      return value;
+    unwrapOrElse (): TValue | undefined {
+      return val;
     },
-    isFailed: false,
-    value
+    unwrapOrDefault (): TValue | undefined {
+      return val;
+    },
+    value: val
   };
 };
 
-type Result<TValue, TError extends Error> = Okay<TValue> | Fail<TError>;
+type Result<TValue, TError extends Error> = ResultValue<TValue> | ResultError<TError>;
 
 export type {
-  Okay,
-  Fail,
+  ResultValue,
+  ResultError,
   Result
 };
 
 export {
-  okay,
-  fail
+  value,
+  error
 };
