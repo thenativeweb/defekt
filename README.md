@@ -154,9 +154,9 @@ const loadConfiguration = async function (): Promise<Result<Configuration, Confi
   }
 };
 
-const configuration = await loadConfiguration();
+const configurationResult = await loadConfiguration();
 
-const port = configuration.unpackOrDefault({ port: 3000 });
+const configuration = configurationResult.unpackOrDefault({ port: 3000 });
 
 await startServer(configuration.port);
 ```
