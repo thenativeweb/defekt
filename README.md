@@ -14,187 +14,205 @@ defekt is custom errors made simple.
 | Build            | ![GitHub Actions](https://github.com/thenativeweb/defekt/workflows/Release/badge.svg?branch=master) |
 | License          | ![GitHub](https://img.shields.io/github/license/thenativeweb/defekt)                                |
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Using `defekt`](#using-defekt)
+- [Using `Result`s](#using-results)
+
 ## Installation
 
 ```shell
 $ npm install defekt
 ```
 
-## Quick start
+## Using `defekt`
 
-First you need to add a reference to defekt in your application:
+### Creating custom errors
 
-```javascript
-const { defekt } = require('defekt');
-```
-
-If you use TypeScript, use the following code instead:
+To create custom errors, create new classes and let them extend the anonymous class created by `defekt`:
 
 ```typescript
 import { defekt } from 'defekt';
+
+class TokenMalformed extends defekt('TokenMalformed') {}
+class TokenExpired extends defekt('TokenExpired') {}
 ```
 
-Then call the `defekt` function and hand over an object of custom error configurations that you would like to have created. In this object each key is the name for an error and the corresponding value is the error's configuration.
+The string you give to the `defekt` function determines the error's `name` and its default error message. It should be the same as the class name.
 
-```javascript
-const errors = defekt({
-  ArgumentNull: {},
-  InvalidOperation: {},
-  // ...
-});
-```
+These custom errors can be used in various ways. They are, however, not intended to be thrown. They are intended to be passed around as objects, preferably wrapped in a result type. This allows the handling of recoverable errors in a type-safe way, instead of using unchecked and unpredictable thrown exceptions or rejections.
 
-The result is an object containing all the errors you specified. To use one of those errors, simply call the appropriate function with `new` and throw it:
+```typescript
+import { defekt, fail, okay, Result } from 'defekt';
 
-```javascript
-throw new errors.InvalidOperation();
-```
+class TokenMalformed extends defekt('TokenMalformed') {}
+class TokenExpired extends defekt('TokenExpired') {}
 
-By default, the error name is also used as the error message, but converted to a human readable form. E.g., the error name `InvalidOperation` becomes the message `Invalid operation.`:
-
-```javascript
-try {
-  throw new errors.InvalidOperation();
-} catch (ex) {
-  console.log(ex.message);
-  // => 'Invalid operation.'
-}
-```
-
-If you want to specify a custom message, feel free to do so:
-
-```javascript
-throw new errors.InvalidOperation('Something failed.');
-```
-
-Additionally, if an error was caused by another error, you can specify this error using the `cause` property:
-
-```javascript
-throw new errors.InvalidOperation('Something failed.', {
-  cause: new Error(...)
-});
-```
-
-From time to time, you may need to provide additional data for an error. For this, you can use the `data` property:
-
-```javascript
-throw new errors.InvalidOperation('Something failed.', {
-  data: { ... }
-});
-```
-
-The custom errors follow the same rules as the built-in ones, i.e. they have a `name` and a `message` property, they derive from `Error` and they can be recognized by the `util.isError` function.
-
-### Defining error codes
-
-By default, each custom error uses its uppercased name with an `E` prefix as error code. E.g., an `InvalidOperation` error uses `EINVALIDOPERATION` as its code.
-
-From time to time, you may want to provide custom error codes. For that specify a `code` property on the configuration object:
-
-```javascript
-const errors = defekt({
-  ArgumentNull: { code: 'ARGNULL' },
-  InvalidOperation: { code: 'INVALOP' }
-  // ...
-});
-```
-
-### Grouping errors
-
-Over time you may get more and more error definitions, which results in a lengthy `errors` object. To group errors, add appropriate properties to the `errors` object and call the `defekt` function multiple times:
-
-```javascript
-const errors = {
-  common: defekt({
-    ArgumentNull: {},
-    InvalidOperation: {}
-    // ...
-  }),
-
-  http: defekt({
-    BadRequest: {}
-    // ...
-  })
-};
-```
-
-### Comparing errors
-
-To tell your errors apart, you sometimes want to compare them – usually based on their error code. To prevent you from using magic strings all over your application, you can use the static `code` property on the error constructors:
-
-```javascript
-const errors = defekt({
-  ArgumentNull: {},
-  InvalidOperation: {}
-  // ...
-});
-
-const error = new errors.InvalidOperation();
-
-if (error.code === errors.InvalidOperation.code) {
+const validateToken = function (token: string): Result<DecodedToken, TokenMalformed | TokenExpired> {
   // ...
 }
-```
 
-Alternatively, if you catch an error from somewhere and there are multiple options, you can use the error codes in a `switch` statement:
+const token = validateToken(rawToken);
 
-```javascript
-try {
-  // ...
-} catch (ex) {
-  switch (ex.code) {
-    case errors.ArgumentNull.code: {
+if (isFailed(token)) {
+  switch (token.error.name) {
+    // TypeScript will support you here and only allow the codes of the two possible defekts.
+    case 'TokenMalformed': {
       // ...
-      break;
     }
-    case errors.InvalidOperation.code: {
+    case 'TokenExpired': {
       // ...
-      break;
-    }
-    default: {
-      throw ex;
     }
   }
 }
 ```
 
-### Recognizing `CustomError`s
+### Instantiating errors
 
-Since version 4.0 TypeScript allows [`unknown` on `catch` clause bindings](https://devblogs.microsoft.com/typescript/announcing-typescript-4-0/#unknown-on-catch). Typing exceptions as `unknown` reduces the assumptions made about their content and forces you to examine your exceptions more closely when handling them. `defekt` provides a type predicate to check for `CustomError`s:
+The custom errors created by this package take several parameters. They provide a default message, but you can override it:
 
 ```typescript
-import { isCustomError } from 'defekt';
+class TokenMalformed extends defekt('TokenMalformed') {}
+
+new TokenMalformed('Token is not valid JSON');
+```
+
+You can also provide a second parameter, which can contain an optional cause for the error or additional data:
+
+```typescript
+class TokenMalformed extends defekt('TokenMalformed') {}
 
 try {
   // ...
 } catch (ex: unknown) {
-  if (isCustomError(ex)) {
-    switch (ex.code) {
-      // ...
-    }
-  }
-  // Rethrow or check for other known non-defekt error types here.
+  new TokenMalformed(undefined, { cause: ex })
+}
+
+new TokenMalformed(undefined, { data: { foo: 'bar' }})
+```
+
+### Custom error type-guards
+
+Custom errors can be type-guarded using `isCustomError`. With only one parameter it specifies an error's type to `CustomError`:
+
+```typescript
+const error: unknown;
+
+if (isCustomError(error)) {
+  // In this scope error is of type CustomError.
 }
 ```
 
-### Recognizing JavaScript `Error`s
-
-In addition to `CustomError`s and helpers related to those, `defekt` provides some tooling to work with native JavaScript `Error`s. Since TypeScript 4.0 caught exceptions can be annotated as `unknown` (see [Typescript 4.0 release notes](https://devblogs.microsoft.com/typescript/announcing-typescript-4-0/#unknown-on-catch)). Our [ESLint rules](https://github.com/thenativeweb/eslint-config-es) require us to use `unknown` over `any`, since it is more correct and defensive.
-
-This requires developers to work with type guards to ensure that a caught error is actually an `Error`. Use `isError` for this:
+You can supply the specific custom error constructor you want to check for as the second parameter:
 
 ```typescript
-import { isError } from 'defekt';
+const error: TokenMalformed | TokenInvalid;
 
-try {
-  // ...
-} catch (ex: unknown) {
-  if (!isError(ex)) {
-    // ex is unfortunately something really weird. You might want to get rid of whatever library is causing this.
+if (isCustomError(error, TokenMalformed)) {
+  // In this scope error is of type CustomError<'TokenMalformed'>.
+  // This is usually functionally equivalent to the type TokenMalformed, but has slight
+  // differences if you e.g. define properties on the TokenMalformed class.
+}
+```
+
+## Using `Result`
+
+### What is this and why would I use it
+
+Error handling is an integral part of reliable applications. Unfortunately, TypeScript does not provide a way to type-check exceptions or to even annotate functions with information about the exceptions they might throw. This makes all exceptions in TypeScript unchecked, unpredictable and unreliable.
+
+In addition to that, JavaScript - and by extension, TypeScript - does not differentiate between recoverable errors and unrecoverable errors. I recommend [this blog post by Joe Duffy](http://joeduffyblog.com/2016/02/07/the-error-model/) on the difference between the two and various ways to implement them.
+
+This library aims to differentiate between recoverable errors and unrecoverable ones, by wrapping recoverable errors in a data structure. This approach is a more fancy version of the basic concept of error codes. Wrapping errors in data structures that have semantics is an attempt to bring concepts from languages like Haskell into TypeScript. Consider this situation:
+
+```typescript
+const configuration = await loadConfiguration();
+
+await startServer(configuration.port ?? 3000);
+```
+
+Here, `loadConfiguration` might fail for several reasons. It might try to access the files system and fail because the config file does not exist. It might also fail because the configuration file is too large and the process runs out of memory. The former we want to handle - since we have a default value for the port. The latter we do not want to handle, since we can't do anything about it. So imagine `loadConfiguration` would announce its recoverable errors in its signature:
+
+```typescript
+import fs from 'fs';
+import { fail, okay } from '@yeldirium/result';
+
+const loadConfiguration = async function (): Promise<Result<Configuration, ConfigurationNotFound>> {
+  try {
+    return okay(
+      JSON.parse(
+        await fs.promises.readFile(configFilePath, 'utf-8')
+      )
+    );
+  } catch (ex) {
+    if (ex.code === 'ENOENT') {
+      return fail(new ConfigurationNotFound('Failed to read configuration file.', { ex }));
+    }
+    
     throw ex;
   }
-  // ...
+};
+
+const configuration = await loadConfiguration();
+
+const port = configuration.unpackOrDefault({ port: 3000 });
+
+await startServer(configuration.port);
+```
+
+Here, any errors related to the configuration file missing are caught, propagated and handled explicitly. If `JSON.parse` fails or if the process runs out of memory, an exception will be thrown and *not* handled.
+
+### API Overview
+
+There are two ways to construct a `Result`. A result can either be `Okay` or `Fail`:
+
+```typescript
+import { Okay, okay, Fail, fail, Result } from '@yeldirium/result';
+
+const failedResult: Fail<Error> = fail(new Error());
+const successfulResult: Okay<number> = okay(5);
+
+// Both are assignable to a Result with the right type parameters.
+let result = Result<number, Error>;
+result = failedResult;
+result = successfulResult;
+```
+
+When you get a result from a function, you can check whether it has failed and act appropriately:
+
+```typescript
+import { Result } from '@yeldirium/result';
+
+const someResult: Result<number, Error> = calculateStuff();
+
+if (someResult.isFail()) {
+  // Propagate the error so that callers can maybe handle it.
+  return someResult;
 }
+
+console.log(someResult.value);
+```
+
+Alternatively you can use `isOkay` to achieve the opposite.
+
+There is a more convenient solution, if you don't need to propagate your errors:
+
+```typescript
+import { Result } from '@yeldirium/result';
+
+const someResult: Result<number, Error> = calculateStuff();
+
+const value = someResult.unpackOrDefault(17);
+
+// Or, if you can not handle the possible errors appropriately and instead want to crash your application:
+const value = someResult.unpackOrCrash();
+
+// If you want to give more context information before propagating an error, you can optionally supply an error handler.
+// This error *must* return a new Error.
+const value = someResult.unpackOrCrash(
+  (ex) => new ErrorWithMoreContext('Some message', { cause: ex })
+);
 ```
 
 ## Running quality assurance
