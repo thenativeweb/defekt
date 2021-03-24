@@ -13,16 +13,22 @@ const defekt = function <TErrorName extends string>(
     public data?: any;
 
     public constructor (
-      message?: string,
-      { cause, data }: {
+      messageOrMetadata: string | {
         cause?: unknown;
         data?: any;
+        message?: string;
       } = {}
     ) {
-      super(message ?? `${formatErrorMessage({ errorName })}`);
+      super(
+        typeof messageOrMetadata === 'string' ?
+          messageOrMetadata :
+          messageOrMetadata.message ?? `${formatErrorMessage({ errorName })}`
+      );
 
-      this.cause = cause;
-      this.data = data;
+      if (typeof messageOrMetadata !== 'string') {
+        this.cause = messageOrMetadata.cause;
+        this.data = messageOrMetadata.data;
+      }
     }
   };
 };

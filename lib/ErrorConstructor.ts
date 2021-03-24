@@ -1,8 +1,7 @@
 import { CustomError } from './CustomError';
 
 type ErrorConstructor<TErrorName extends string> = new(
-  message?: string,
-  meta?: { cause?: unknown; data?: any }
+  parameters?: string | { cause?: unknown; data?: any; message?: string }
 ) => CustomError<TErrorName>;
 
 export type {

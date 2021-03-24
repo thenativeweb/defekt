@@ -27,11 +27,19 @@ suite('defekt', (): void => {
     assert.that(ex.message).is.equalTo('Token is not valid JSON');
   });
 
+  test('creates a custom error with an optional custom message in the parameter object.', async (): Promise<void> => {
+    class TokenInvalid extends defekt('TokenInvalid') {}
+
+    const ex = new TokenInvalid({ message: 'Token is not valid JSON' });
+
+    assert.that(ex.message).is.equalTo('Token is not valid JSON');
+  });
+
   test('creates a custom error with an optional cause.', async (): Promise<void> => {
     class TokenInvalid extends defekt('TokenInvalid') {}
 
     const cause: unknown = {};
-    const ex = new TokenInvalid(undefined, { cause });
+    const ex = new TokenInvalid({ cause });
 
     assert.that(ex.cause).is.equalTo(cause);
   });
@@ -40,7 +48,7 @@ suite('defekt', (): void => {
     class TokenInvalid extends defekt('TokenInvalid') {}
 
     const data = { foo: 'bar' };
-    const ex = new TokenInvalid(undefined, { data });
+    const ex = new TokenInvalid({ data });
 
     assert.that(ex.data).is.equalTo(data);
   });
