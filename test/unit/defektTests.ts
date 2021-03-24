@@ -1,5 +1,5 @@
 import { assert } from 'assertthat';
-import humanizeString from 'humanize-string';
+import { formatErrorMessage } from '../../lib/formatErrorMessage';
 import { CustomError, defekt } from '../../lib';
 
 suite('defekt', (): void => {
@@ -8,7 +8,7 @@ suite('defekt', (): void => {
 
     const ex = new TokenInvalid();
 
-    assert.that(ex.message).is.equalTo(humanizeString('TokenInvalid'));
+    assert.that(ex.message).is.equalTo(formatErrorMessage({ errorName: 'TokenInvalid' }));
   });
 
   test('creates a custom error with a correct name.', async (): Promise<void> => {

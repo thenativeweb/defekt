@@ -1,6 +1,6 @@
 import { assert } from 'assertthat';
-import { isError } from '../../lib/isError';
 import { defekt } from '../../lib/defekt';
+import { isError } from '../../lib/isError';
 
 suite('isError', (): void => {
   test('returns true, if the parameter is an Error.', async (): Promise<void> => {

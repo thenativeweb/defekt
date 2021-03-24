@@ -1,9 +1,9 @@
 import { assert } from 'assertthat';
-import { isCustomError, kaputt } from '../../lib';
+import { defekt, isCustomError } from '../../lib';
 
 suite('isCustomError', (): void => {
   test('returns true, if the parameter is a CustomError.', async (): Promise<void> => {
-    class TokenInvalid extends kaputt('TokenInvalid') {}
+    class TokenInvalid extends defekt('TokenInvalid') {}
 
     const ex = new TokenInvalid();
 
@@ -48,9 +48,10 @@ suite('isCustomError', (): void => {
   });
 
   test('works with unknown type binding in catch clause.', async (): Promise<void> => {
-    class TokenInvalid extends kaputt('TokenInvalid') {}
+    class TokenInvalid extends defekt('TokenInvalid') {}
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw new TokenInvalid();
     } catch (ex: unknown) {
       if (isCustomError(ex)) {
@@ -62,11 +63,11 @@ suite('isCustomError', (): void => {
   });
 
   test(`acts as a type guard for 'CustomError'.`, async (): Promise<void> => {
-    class TokenInvalid extends kaputt('TokenInvalid') {}
+    class TokenInvalid extends defekt('TokenInvalid') {}
 
     const ex: TokenInvalid = new TokenInvalid();
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function,unicorn/consistent-function-scoping
     const assertIsError = function (ex2: Error): void {};
 
     if (isCustomError(ex)) {
@@ -75,8 +76,8 @@ suite('isCustomError', (): void => {
   });
 
   test('acts as a type guard for specific custom errors.', async (): Promise<void> => {
-    class TokenInvalid extends kaputt('TokenInvalid') {}
-    class TokenExpired extends kaputt('TokenExpired') {}
+    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenExpired extends defekt('TokenExpired') {}
 
     const ex: TokenExpired | TokenInvalid = new TokenInvalid();
 
