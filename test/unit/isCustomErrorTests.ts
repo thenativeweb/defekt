@@ -3,10 +3,9 @@ import { defekt, isCustomError } from '../../lib';
 
 suite('isCustomError', (): void => {
   test('returns true, if the parameter is a CustomError.', async (): Promise<void> => {
-    const errors = defekt({
-      InvalidOperation: {}
-    });
-    const ex = new errors.InvalidOperation();
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    const ex = new TokenInvalid();
 
     const result = isCustomError(ex);
 
@@ -39,8 +38,7 @@ suite('isCustomError', (): void => {
 
   test('returns false, if a necessary property exists but has the wrong type.', async (): Promise<void> => {
     const ex = {
-      name: 'InvalidOperation',
-      code: 5,
+      name: 5,
       message: ''
     };
 
@@ -49,27 +47,45 @@ suite('isCustomError', (): void => {
     assert.that(result).is.false();
   });
 
-  test('returns false, if the parameter is a normal Error.', async (): Promise<void> => {
-    const ex = new Error('Something went wrong.');
-
-    const result = isCustomError(ex);
-
-    assert.that(result).is.false();
-  });
-
   test('works with unknown type binding in catch clause.', async (): Promise<void> => {
-    const errors = defekt({
-      InvalidOperation: {}
-    });
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     try {
-      throw new errors.InvalidOperation();
+      // eslint-disable-next-line @typescript-eslint/no-throw-literal
+      throw new TokenInvalid();
     } catch (ex: unknown) {
       if (isCustomError(ex)) {
-        assert.that(ex.code).is.equalTo(errors.InvalidOperation.code);
+        assert.that(ex.code).is.equalTo(TokenInvalid.code);
       } else {
         throw new Error('This should not happen.');
       }
+    }
+  });
+
+  test(`acts as a type guard for 'CustomError'.`, async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    const ex: TokenInvalid = new TokenInvalid();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function,unicorn/consistent-function-scoping
+    const assertIsError = function (ex2: Error): void {};
+
+    if (isCustomError(ex)) {
+      assertIsError(ex);
+    }
+  });
+
+  test('acts as a type guard for specific custom errors.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+    class TokenExpired extends defekt({ code: 'TokenExpired' }) {}
+
+    const ex: TokenExpired | TokenInvalid = new TokenInvalid();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
+    const assertIsCustomError = function (ex2: TokenInvalid): void {};
+
+    if (isCustomError(ex, TokenInvalid)) {
+      assertIsCustomError(ex);
     }
   });
 });

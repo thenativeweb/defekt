@@ -1,52 +1,44 @@
 import { CustomError } from './CustomError';
-import { ErrorConstructors } from './ErrorConstructors';
+import { ErrorConstructor } from './ErrorConstructor';
 import { formatErrorMessage } from './formatErrorMessage';
 
-const defekt = function <TErrorDefinition extends Record<string, { code?: string }>>
-(errorDefinitions: TErrorDefinition): ErrorConstructors<TErrorDefinition> {
-  const errors: Partial<ErrorConstructors<TErrorDefinition>> = {};
+const defekt = function <TErrorCode extends string>({
+  code,
+  defaultMessage
+}: {
+  code: TErrorCode;
+  defaultMessage?: string;
+}): ErrorConstructor<TErrorCode> {
+  return class extends Error implements CustomError<TErrorCode> {
+    public static code: TErrorCode = code;
 
-  /* eslint-disable guard-for-in */
-  for (const errorName in errorDefinitions) {
-    const errorDefinition = errorDefinitions[errorName];
+    public code: TErrorCode = code;
 
-    const { code = `E${errorName.toUpperCase()}` } = errorDefinition;
+    public cause?: unknown;
 
-    errors[errorName] = class extends Error implements CustomError {
-      public name: string;
+    public data?: any;
 
-      public code: string;
-
-      public message: string;
-
-      public cause?: unknown;
-
-      public data?: any;
-
-      public static code: string = code;
-
-      /* eslint-disable default-param-last */
-      public constructor (message = formatErrorMessage({ errorName }), {
-        cause,
-        data
-      }: {
+    public constructor (
+      messageOrMetadata: string | {
         cause?: unknown;
         data?: any;
-      } = {}) {
-        /* eslint-enable default-param-last */
-        super();
+        message?: string;
+      } = {}
+    ) {
+      super(
+        typeof messageOrMetadata === 'string' ?
+          messageOrMetadata :
+          messageOrMetadata.message ?? defaultMessage ?? `${formatErrorMessage({ code })}`
+      );
 
-        this.name = errorName;
-        this.code = code;
-        this.message = message;
-        this.cause = cause;
-        this.data = data;
+      if (typeof messageOrMetadata !== 'string') {
+        this.cause = messageOrMetadata.cause;
+        this.data = messageOrMetadata.data;
       }
-    };
-  }
-  /* eslint-enable guard-for-in */
-
-  return errors as ErrorConstructors<TErrorDefinition>;
+    }
+  };
 };
 
-export { defekt };
+export {
+  defekt
+};

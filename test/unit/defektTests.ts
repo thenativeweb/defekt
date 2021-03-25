@@ -1,124 +1,125 @@
 import { assert } from 'assertthat';
-import { defekt } from '../../lib';
-import { types } from 'util';
+import { formatErrorMessage } from '../../lib/formatErrorMessage';
+import { CustomError, defekt } from '../../lib';
 
 suite('defekt', (): void => {
-  suite('errors', (): void => {
-    test('contains the specified errors.', async (): Promise<void> => {
-      const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
+  test('creates a custom error with a default message.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
-      assert.that(errors.InvalidOperation).is.ofType('function');
-      assert.that(errors.ArgumentNull).is.ofType('function');
-    });
+    const ex = new TokenInvalid();
 
-    suite('CustomError', (): void => {
-      test('is an error.', async (): Promise<void> => {
-        const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-        const error = new errors.InvalidOperation();
+    assert.that(ex.message).is.equalTo(formatErrorMessage({ code: 'TokenInvalid' }));
+  });
 
-        assert.that(error).is.instanceOf(Error);
-      });
+  test('creates a custom error with a custom default message.', async (): Promise<void> => {
+    const defaultMessage = 'The token was invalid.';
 
-      test('is recognized by util.types.isNativeError.', async (): Promise<void> => {
-        const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-        const error = new errors.InvalidOperation();
+    class TokenInvalid extends defekt({ code: 'TokenInvalid', defaultMessage }) {}
 
-        assert.that(types.isNativeError(error)).is.true();
-      });
+    const ex = new TokenInvalid();
 
-      suite('name', (): void => {
-        test('contains the given name.', async (): Promise<void> => {
-          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-          const error = new errors.InvalidOperation();
+    assert.that(ex.message).is.equalTo(defaultMessage);
+  });
 
-          assert.that(error.name).is.equalTo('InvalidOperation');
-        });
-      });
+  test('creates a custom error with a correct code.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
-      suite('code', (): void => {
-        test('is the E-prefixed upper-cased name by default.', async (): Promise<void> => {
-          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-          const error = new errors.InvalidOperation();
+    const ex = new TokenInvalid();
 
-          assert.that(error.code).is.equalTo('EINVALIDOPERATION');
-        });
+    assert.that(ex.code).is.equalTo('TokenInvalid');
+  });
 
-        test('is set to the given value.', async (): Promise<void> => {
-          const errors = defekt({
-            InvalidOperation: { code: 'INVOP' },
-            ArgumentNull: {}
-          });
-          const error = new errors.InvalidOperation();
+  test('creates a custom error with a correct code, even if the class name does not match.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'SomethingCompletelyUnrelated' }) {}
 
-          assert.that(error.code).is.equalTo('INVOP');
-        });
-      });
+    const ex: TokenInvalid = new TokenInvalid();
 
-      suite('message', (): void => {
-        test('contains the human readable error name if no message was given.', async (): Promise<void> => {
-          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-          const error = new errors.InvalidOperation();
+    assert.that(ex.code).is.equalTo('SomethingCompletelyUnrelated');
+    assert.that(TokenInvalid.code).is.equalTo('SomethingCompletelyUnrelated');
+  });
 
-          assert.that(error.message).is.equalTo('Invalid operation.');
-        });
+  test('creates a custom error with an optional custom message.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
-        test('contains the human readable error name for longer names.', async (): Promise<void> => {
-          const errors = defekt({ LongerErrorNameWithMultipleWords: {}});
-          const error = new errors.LongerErrorNameWithMultipleWords();
+    const ex = new TokenInvalid('Token is not valid JSON');
 
-          assert.that(error.message).is.equalTo('Longer error name with multiple words.');
-        });
+    assert.that(ex.message).is.equalTo('Token is not valid JSON');
+  });
 
-        test('contains the given message.', async (): Promise<void> => {
-          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-          const error = new errors.InvalidOperation('foobar');
+  test('creates a custom error with an optional custom message in the parameter object.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
-          assert.that(error.message).is.equalTo('foobar');
-        });
-      });
+    const ex = new TokenInvalid({ message: 'Token is not valid JSON' });
 
-      suite('cause', (): void => {
-        test('is undefined if no inner error is given.', async (): Promise<void> => {
-          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-          const error = new errors.InvalidOperation('foobar');
+    assert.that(ex.message).is.equalTo('Token is not valid JSON');
+  });
 
-          assert.that(error.cause).is.undefined();
-        });
+  test('creates a custom error with an optional cause.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
-        test('contains the given inner error.', async (): Promise<void> => {
-          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-          const cause = new errors.ArgumentNull();
-          const error = new errors.InvalidOperation('foobar', { cause });
+    const cause: unknown = {};
+    const ex = new TokenInvalid({ cause });
 
-          assert.that(error.cause).is.equalTo(cause);
-        });
-      });
+    assert.that(ex.cause).is.equalTo(cause);
+  });
 
-      suite('data', (): void => {
-        test('is undefined if no data is given.', async (): Promise<void> => {
-          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-          const error = new errors.InvalidOperation('foobar');
+  test('creates a custom error with optional additional data.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
-          assert.that(error.data).is.undefined();
-        });
+    const data = { foo: 'bar' };
+    const ex = new TokenInvalid({ data });
 
-        test('contains the given data.', async (): Promise<void> => {
-          const errors = defekt({ InvalidOperation: {}, ArgumentNull: {}});
-          const error = new errors.InvalidOperation('foobar', { data: { foo: 'bar' }});
+    assert.that(ex.data).is.equalTo(data);
+  });
 
-          assert.that(error.data).is.equalTo({ foo: 'bar' });
-        });
-      });
-    });
+  test(`creates a custom errors that fulfils the 'CustomError' interface.`, async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
-    suite('static error code', (): void => {
-      test('exposes the error code as static property on constructor.', async (): Promise<void> => {
-        const errors = defekt({
-          InvalidOperation: {}
-        });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function,unicorn/consistent-function-scoping
+    const assertIsCustomError = function (ex: CustomError): void {};
 
-        assert.that(errors.InvalidOperation.code).is.equalTo('EINVALIDOPERATION');
-      });
-    });
+    const ex = new TokenInvalid();
+
+    assertIsCustomError(ex);
+  });
+
+  test(`creates a custom error that fulfils the 'Error' interface.`, async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function,unicorn/consistent-function-scoping
+    const assertIsError = function (ex: Error): void {};
+
+    const ex = new TokenInvalid();
+
+    assertIsError(ex);
+  });
+
+  test(`creates a custom error that contains a stack trace.`, async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    const ex = new TokenInvalid();
+
+    assert.that(ex.stack).is.not.undefined();
+  });
+
+  test(`creates custom errors that can be used in exhaustive switch/case statements.`, async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+    class TokenExpired extends defekt({ code: 'TokenExpired' }) {}
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const ex: TokenInvalid | TokenExpired = {} as any;
+
+    switch (ex.code) {
+      case TokenExpired.code: {
+        break;
+      }
+      case TokenInvalid.code: {
+        break;
+      }
+      default: {
+        // This would not compile if the above cases were not exhaustive.
+        return {} as never;
+      }
+    }
   });
 });

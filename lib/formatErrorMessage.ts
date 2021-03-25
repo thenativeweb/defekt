@@ -1,7 +1,7 @@
-const formatErrorMessage = function ({ errorName }: {
-  errorName: string;
+const formatErrorMessage = function ({ code }: {
+  code: string;
 }): string {
-  const almostFormattedErrorMessage = errorName.
+  const almostFormattedErrorMessage = code.
     split('').
     map((character: string, index: number): string => {
       if (index === 0) {
