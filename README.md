@@ -188,8 +188,7 @@ const loadConfiguration = async function (): Promise<Result<Configuration, Confi
   }
 };
 
-const configurationResult = await loadConfiguration();
-const configuration = configurationResult.unwrapOrDefault({ port: 3000 });
+const configuration = (await loadConfiguration()).unwrapOrDefault({ port: 3000 });
 
 await startServer(configuration.port);
 ```
@@ -242,17 +241,15 @@ const validateToken = function (token: string): Result<DecodedToken, TokenMalfor
   // ...
 };
 
-const tokenResult = validateToken('a token');
-
-const token = tokenResult.unwrapOrDefault({ sub: 'anonymous' });
+const token = validateToken('a token').unwrapOrDefault({ sub: 'anonymous' });
 
 // Or, if you can't handle the possible errors appropriately and 
 // instead want to throw the error, possibly crashing your application:
-const token = tokenResult.unwrapOrThrow();
+const token = validateToken('a token').unwrapOrThrow();
 
 // If you want to handle errors by returning a conditional default 
 // value, you can use `unwrapOrElse` to supply a handler:
-const token = tokenResult.unwrapOrElse(
+const token = validateToken('a token').unwrapOrElse(
   (ex) => {
     switch (ex.code) {
       case TokenMalformed.code: {
