@@ -1,3 +1,10 @@
+## [7.0.3](https://github.com/thenativeweb/defekt/compare/7.0.2...7.0.3) (2021-03-25)
+
+
+### Bug Fixes
+
+* update examples in README ([#287](https://github.com/thenativeweb/defekt/issues/287)) ([3b2b1ae](https://github.com/thenativeweb/defekt/commit/3b2b1ae0f1f3e1fee0ea53d724f231500fe03528))
+
 ## [7.0.2](https://github.com/thenativeweb/defekt/compare/7.0.1...7.0.2) (2021-03-25)
 
 
