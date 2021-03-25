@@ -1,3 +1,15 @@
+# [7.0.0](https://github.com/thenativeweb/defekt/compare/6.0.2...7.0.0) (2021-03-25)
+
+
+### Features
+
+* Rewrite from scratch and add algebraic Result type. ([#283](https://github.com/thenativeweb/defekt/issues/283)) ([5f8cafd](https://github.com/thenativeweb/defekt/commit/5f8cafd9781e888e81c9055a75a091e6169fc603))
+
+
+### BREAKING CHANGES
+
+* The old defekt interface is obsolete and has been completely replaced.
+
 ## [6.0.2](https://github.com/thenativeweb/defekt/compare/6.0.1...6.0.2) (2021-01-20)
 
 
