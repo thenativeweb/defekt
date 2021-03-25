@@ -1,3 +1,10 @@
+## [7.0.2](https://github.com/thenativeweb/defekt/compare/7.0.1...7.0.2) (2021-03-25)
+
+
+### Bug Fixes
+
+* Add missing TValue and TError generics to constructors. ([#286](https://github.com/thenativeweb/defekt/issues/286)) ([df18c64](https://github.com/thenativeweb/defekt/commit/df18c640c197c8862db68785490b8b7a6d803252))
+
 ## [7.0.1](https://github.com/thenativeweb/defekt/compare/7.0.0...7.0.1) (2021-03-25)
 
 
