@@ -2,7 +2,7 @@
 
 defekt is custom errors made simple.
 
-![defekt](https://github.com/thenativeweb/defekt/raw/master/images/logo.jpg "defekt")
+![defekt](https://github.com/thenativeweb/defekt/raw/main/images/logo.jpg "defekt")
 
 ## Status
 
@@ -11,7 +11,7 @@ defekt is custom errors made simple.
 | Version          | [![npm](https://img.shields.io/npm/v/defekt)](https://www.npmjs.com/package/defekt)                 |
 | Dependencies     | ![David](https://img.shields.io/david/thenativeweb/defekt)                                          |
 | Dev dependencies | ![David](https://img.shields.io/david/dev/thenativeweb/defekt)                                      |
-| Build            | ![GitHub Actions](https://github.com/thenativeweb/defekt/workflows/Release/badge.svg?branch=master) |
+| Build            | ![GitHub Actions](https://github.com/thenativeweb/defekt/workflows/Release/badge.svg?branch=main) |
 | License          | ![GitHub](https://img.shields.io/github/license/thenativeweb/defekt)                                |
 
 ## Table of Contents
