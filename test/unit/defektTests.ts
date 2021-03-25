@@ -4,23 +4,42 @@ import { CustomError, defekt } from '../../lib';
 
 suite('defekt', (): void => {
   test('creates a custom error with a default message.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     const ex = new TokenInvalid();
 
-    assert.that(ex.message).is.equalTo(formatErrorMessage({ errorName: 'TokenInvalid' }));
+    assert.that(ex.message).is.equalTo(formatErrorMessage({ code: 'TokenInvalid' }));
   });
 
-  test('creates a custom error with a correct name.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+  test('creates a custom error with a custom default message.', async (): Promise<void> => {
+    const defaultMessage = 'The token was invalid.';
+
+    class TokenInvalid extends defekt({ code: 'TokenInvalid', defaultMessage }) {}
 
     const ex = new TokenInvalid();
 
-    assert.that(ex.name).is.equalTo('TokenInvalid');
+    assert.that(ex.message).is.equalTo(defaultMessage);
+  });
+
+  test('creates a custom error with a correct code.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    const ex = new TokenInvalid();
+
+    assert.that(ex.code).is.equalTo('TokenInvalid');
+  });
+
+  test('creates a custom error with a correct code, even if the class name does not match.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'SomethingCompletelyUnrelated' }) {}
+
+    const ex: TokenInvalid = new TokenInvalid();
+
+    assert.that(ex.code).is.equalTo('SomethingCompletelyUnrelated');
+    assert.that(TokenInvalid.code).is.equalTo('SomethingCompletelyUnrelated');
   });
 
   test('creates a custom error with an optional custom message.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     const ex = new TokenInvalid('Token is not valid JSON');
 
@@ -28,7 +47,7 @@ suite('defekt', (): void => {
   });
 
   test('creates a custom error with an optional custom message in the parameter object.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     const ex = new TokenInvalid({ message: 'Token is not valid JSON' });
 
@@ -36,7 +55,7 @@ suite('defekt', (): void => {
   });
 
   test('creates a custom error with an optional cause.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     const cause: unknown = {};
     const ex = new TokenInvalid({ cause });
@@ -45,7 +64,7 @@ suite('defekt', (): void => {
   });
 
   test('creates a custom error with optional additional data.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     const data = { foo: 'bar' };
     const ex = new TokenInvalid({ data });
@@ -54,7 +73,7 @@ suite('defekt', (): void => {
   });
 
   test(`creates a custom errors that fulfils the 'CustomError' interface.`, async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function,unicorn/consistent-function-scoping
     const assertIsCustomError = function (ex: CustomError): void {};
@@ -65,7 +84,7 @@ suite('defekt', (): void => {
   });
 
   test(`creates a custom error that fulfils the 'Error' interface.`, async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function,unicorn/consistent-function-scoping
     const assertIsError = function (ex: Error): void {};
@@ -76,7 +95,7 @@ suite('defekt', (): void => {
   });
 
   test(`creates a custom error that contains a stack trace.`, async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     const ex = new TokenInvalid();
 
@@ -84,17 +103,17 @@ suite('defekt', (): void => {
   });
 
   test(`creates custom errors that can be used in exhaustive switch/case statements.`, async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
-    class TokenExpired extends defekt('TokenExpired') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+    class TokenExpired extends defekt({ code: 'TokenExpired' }) {}
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const ex: TokenInvalid | TokenExpired = {} as any;
 
-    switch (ex.name) {
-      case 'TokenExpired': {
+    switch (ex.code) {
+      case TokenExpired.code: {
         break;
       }
-      case 'TokenInvalid': {
+      case TokenInvalid.code: {
         break;
       }
       default: {

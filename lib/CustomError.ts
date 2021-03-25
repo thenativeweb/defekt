@@ -1,5 +1,5 @@
 interface CustomError<TErrorName extends string = string> extends Error {
-  name: TErrorName;
+  code: TErrorName;
   message: string;
   cause?: unknown;
   data?: any;

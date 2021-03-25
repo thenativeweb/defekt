@@ -2,11 +2,17 @@ import { CustomError } from './CustomError';
 import { ErrorConstructor } from './ErrorConstructor';
 import { formatErrorMessage } from './formatErrorMessage';
 
-const defekt = function <TErrorName extends string>(
-  errorName: TErrorName
-): ErrorConstructor<TErrorName> {
-  return class extends Error implements CustomError<TErrorName> {
-    public name: TErrorName = errorName;
+const defekt = function <TErrorCode extends string>({
+  code,
+  defaultMessage
+}: {
+  code: TErrorCode;
+  defaultMessage?: string;
+}): ErrorConstructor<TErrorCode> {
+  return class extends Error implements CustomError<TErrorCode> {
+    public static code: TErrorCode = code;
+
+    public code: TErrorCode = code;
 
     public cause?: unknown;
 
@@ -22,7 +28,7 @@ const defekt = function <TErrorName extends string>(
       super(
         typeof messageOrMetadata === 'string' ?
           messageOrMetadata :
-          messageOrMetadata.message ?? `${formatErrorMessage({ errorName })}`
+          messageOrMetadata.message ?? defaultMessage ?? `${formatErrorMessage({ code })}`
       );
 
       if (typeof messageOrMetadata !== 'string') {

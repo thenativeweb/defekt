@@ -12,7 +12,7 @@ suite('isError', (): void => {
   });
 
   test('returns true, if the parameter is a CustomError.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     const ex: TokenInvalid = new TokenInvalid();
 

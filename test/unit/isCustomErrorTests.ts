@@ -3,7 +3,7 @@ import { defekt, isCustomError } from '../../lib';
 
 suite('isCustomError', (): void => {
   test('returns true, if the parameter is a CustomError.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     const ex = new TokenInvalid();
 
@@ -48,14 +48,14 @@ suite('isCustomError', (): void => {
   });
 
   test('works with unknown type binding in catch clause.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     try {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw new TokenInvalid();
     } catch (ex: unknown) {
       if (isCustomError(ex)) {
-        assert.that(ex.name).is.equalTo(TokenInvalid.name);
+        assert.that(ex.code).is.equalTo(TokenInvalid.code);
       } else {
         throw new Error('This should not happen.');
       }
@@ -63,7 +63,7 @@ suite('isCustomError', (): void => {
   });
 
   test(`acts as a type guard for 'CustomError'.`, async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     const ex: TokenInvalid = new TokenInvalid();
 
@@ -76,8 +76,8 @@ suite('isCustomError', (): void => {
   });
 
   test('acts as a type guard for specific custom errors.', async (): Promise<void> => {
-    class TokenInvalid extends defekt('TokenInvalid') {}
-    class TokenExpired extends defekt('TokenExpired') {}
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+    class TokenExpired extends defekt({ code: 'TokenExpired' }) {}
 
     const ex: TokenExpired | TokenInvalid = new TokenInvalid();
 

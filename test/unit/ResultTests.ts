@@ -1,4 +1,5 @@
 import { assert } from 'assertthat';
+import { defekt } from 'lib';
 import { error, Result, value } from '../../lib/Result';
 
 suite('Result', (): void => {
@@ -165,13 +166,15 @@ suite('Result', (): void => {
 
   suite('makes sense', (): void => {
     test('a function that returns a Result can reasonably be used and the types make sense.', async (): Promise<void> => {
+      class CustomError extends defekt({ code: 'CustomError' }) {}
+
       // eslint-disable-next-line unicorn/consistent-function-scoping
-      const getFirstElement = function <TValue>(array: TValue[]): Result<TValue, Error> {
+      const getFirstElement = function <TValue>(array: TValue[]): Result<TValue, CustomError> {
         if (array.length > 0) {
           return value(array[0]);
         }
 
-        return error(new Error('Array is empty.'));
+        return error(new CustomError('Array is empty.'));
       };
 
       const data: number[] = [];
@@ -179,6 +182,20 @@ suite('Result', (): void => {
       const result = getFirstElement(data).unwrapOrDefault(5);
 
       assert.that(result).is.equalTo(5);
+
+      const otherResult = getFirstElement(data);
+
+      if (otherResult.hasError()) {
+        switch (otherResult.error.code) {
+          case CustomError.code: {
+            // This should be executed.
+            break;
+          }
+          default: {
+            throw new Error('Operation invalid.');
+          }
+        }
+      }
     });
   });
 });
