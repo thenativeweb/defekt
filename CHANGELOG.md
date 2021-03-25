@@ -1,3 +1,10 @@
+## [7.0.1](https://github.com/thenativeweb/defekt/compare/7.0.0...7.0.1) (2021-03-25)
+
+
+### Bug Fixes
+
+* Replace master by main ([#285](https://github.com/thenativeweb/defekt/issues/285)) ([23e0f2c](https://github.com/thenativeweb/defekt/commit/23e0f2c5b08bbea139ae611ecdf4bcf2dd6d27d5))
+
 # [7.0.0](https://github.com/thenativeweb/defekt/compare/6.0.2...7.0.0) (2021-03-25)
 
 
