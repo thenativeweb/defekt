@@ -1,3 +1,10 @@
+## [7.0.4](https://github.com/thenativeweb/defekt/compare/7.0.3...7.0.4) (2021-03-25)
+
+
+### Bug Fixes
+
+* Fix wrong usage of error constructor in documentation. ([#289](https://github.com/thenativeweb/defekt/issues/289)) ([459b063](https://github.com/thenativeweb/defekt/commit/459b0639969f0ab3708f983c896f695f3232c3d0))
+
 ## [7.0.3](https://github.com/thenativeweb/defekt/compare/7.0.2...7.0.3) (2021-03-25)
 
 
