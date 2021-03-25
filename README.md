@@ -181,7 +181,10 @@ const loadConfiguration = async function (): Promise<Result<Configuration, Confi
     );
   } catch (ex) {
     if (ex.code === 'ENOENT') {
-      return error(new ConfigurationNotFound('Failed to read configuration file.', { ex }));
+      return error(new ConfigurationNotFound({
+        message: 'Failed to read configuration file.', 
+        cause: ex
+      }));
     }
     
     throw ex;
