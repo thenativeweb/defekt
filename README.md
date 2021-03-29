@@ -266,9 +266,9 @@ const token = validateToken('a token').unwrapOrElse(
 );
 ```
 
-### Recognizing a Result
+### Recognizing a `Result`
 
-If you need to assert the type of a Result, you can use the `isResult` type-guard:
+If you need to assert the type of a `Result`, you can use the `isResult` type-guard:
 
 ```typescript
 import { isResult } from 'defekt';
