@@ -3,6 +3,7 @@ import { defekt } from './defekt';
 import { ErrorConstructor } from './ErrorConstructor';
 import { isCustomError } from './isCustomError';
 import { isError } from './isError';
+import { isResult } from './isResult';
 import { error, Result, value } from './Result';
 
 export {
@@ -12,6 +13,7 @@ export {
   ErrorConstructor,
   isCustomError,
   isError,
+  isResult,
   Result,
   value
 };
