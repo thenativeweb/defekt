@@ -266,6 +266,20 @@ const token = validateToken('a token').unwrapOrElse(
 );
 ```
 
+### Recognizing a Result
+
+If you need to assert the type of a Result, you can use the `isResult` type-guard:
+
+```typescript
+import { isResult } from 'defekt';
+
+const someValue: any = someFunction();
+
+if (isResult(someValue)) {
+  // In this scope someValue is of type Result<any, any>.
+}
+```
+
 ## Running quality assurance
 
 To run quality assurance for this module use [roboter](https://www.npmjs.com/package/roboter):
