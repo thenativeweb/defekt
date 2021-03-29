@@ -1,3 +1,10 @@
+# [7.1.0](https://github.com/thenativeweb/defekt/compare/7.0.4...7.1.0) (2021-03-29)
+
+
+### Features
+
+* Add type-guard isResult. ([#297](https://github.com/thenativeweb/defekt/issues/297)) ([2d1e15a](https://github.com/thenativeweb/defekt/commit/2d1e15a51a853edb961c4ede8970ec9cbcac54fe))
+
 ## [7.0.4](https://github.com/thenativeweb/defekt/compare/7.0.3...7.0.4) (2021-03-25)
 
 
