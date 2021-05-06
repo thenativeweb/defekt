@@ -10,7 +10,7 @@ suite('Result', (): void => {
 
       const result = error(err);
 
-      assert.that(result).is.atLeast({
+      assert.that(result as object).is.atLeast({
         error: err
       });
     });
@@ -21,7 +21,7 @@ suite('Result', (): void => {
 
       const result = error(err);
 
-      assert.that(result).is.atLeast({
+      assert.that(result as object).is.atLeast({
         error: err
       });
     });
@@ -33,7 +33,7 @@ suite('Result', (): void => {
 
       const result = value(val);
 
-      assert.that(result).is.atLeast({
+      assert.that(result as object).is.atLeast({
         value: val
       });
     });
@@ -41,7 +41,7 @@ suite('Result', (): void => {
     test('may be used without a parameter.', async (): Promise<void> => {
       const result = value();
 
-      assert.that(result).is.atLeast({
+      assert.that(result as object).is.atLeast({
         value: undefined
       });
     });
