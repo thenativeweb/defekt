@@ -47,6 +47,14 @@ suite('isCustomError', (): void => {
     assert.that(result).is.false();
   });
 
+  test('returns false, if the parameter is just a basic Error.', async (): Promise<void> => {
+    const ex = new Error('Foo.');
+
+    const result = isCustomError(ex);
+
+    assert.that(result).is.false();
+  });
+
   test('works with unknown type binding in catch clause.', async (): Promise<void> => {
     class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 

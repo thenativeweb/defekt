@@ -9,14 +9,8 @@ const defekt = function <TErrorCode extends string>({
   code: TErrorCode;
   defaultMessage?: string;
 }): ErrorConstructor<TErrorCode> {
-  return class extends Error implements CustomError<TErrorCode> {
+  return class extends CustomError<TErrorCode> {
     public static code: TErrorCode = code;
-
-    public code: TErrorCode = code;
-
-    public cause?: unknown;
-
-    public data?: any;
 
     public constructor (
       messageOrMetadata: string | {
@@ -25,16 +19,14 @@ const defekt = function <TErrorCode extends string>({
         message?: string;
       } = {}
     ) {
-      super(
-        typeof messageOrMetadata === 'string' ?
+      super({
+        code,
+        message: typeof messageOrMetadata === 'string' ?
           messageOrMetadata :
-          messageOrMetadata.message ?? defaultMessage ?? `${formatErrorMessage({ code })}`
-      );
-
-      if (typeof messageOrMetadata !== 'string') {
-        this.cause = messageOrMetadata.cause;
-        this.data = messageOrMetadata.data;
-      }
+          messageOrMetadata.message ?? defaultMessage ?? `${formatErrorMessage({ code })}`,
+        cause: typeof messageOrMetadata === 'string' ? undefined : messageOrMetadata.cause,
+        data: typeof messageOrMetadata === 'string' ? undefined : messageOrMetadata.data
+      });
     }
   };
 };

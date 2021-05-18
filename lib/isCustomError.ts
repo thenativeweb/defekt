@@ -8,6 +8,7 @@ const isCustomError = function <TErrorName extends string>(
 ): ex is CustomError<TErrorName> {
   return (
     isError(ex) &&
+      ex instanceof CustomError &&
       (errorType === undefined || ((ex as any).code === errorType.code))
   );
 };
