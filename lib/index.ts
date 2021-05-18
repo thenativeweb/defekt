@@ -10,10 +10,13 @@ export {
   CustomError,
   defekt,
   error,
-  ErrorConstructor,
   isCustomError,
   isError,
   isResult,
-  Result,
   value
+};
+
+export type {
+  ErrorConstructor,
+  Result
 };
