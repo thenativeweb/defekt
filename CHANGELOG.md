@@ -1,3 +1,10 @@
+## [7.1.2](https://github.com/thenativeweb/defekt/compare/7.1.1...7.1.2) (2021-05-18)
+
+
+### Bug Fixes
+
+* IsCustomError now works as intended; IsError is now simpler. ([#309](https://github.com/thenativeweb/defekt/issues/309)) ([db33b8b](https://github.com/thenativeweb/defekt/commit/db33b8bd68e93c1bf1b3af6e93f2f38ece8ce32f))
+
 ## [7.1.1](https://github.com/thenativeweb/defekt/compare/7.1.0...7.1.1) (2021-05-10)
 
 
