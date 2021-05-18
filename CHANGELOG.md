@@ -1,3 +1,10 @@
+## [7.1.1](https://github.com/thenativeweb/defekt/compare/7.1.0...7.1.1) (2021-05-10)
+
+
+### Bug Fixes
+
+* bump hosted-git-info from 2.8.8 to 2.8.9 ([#306](https://github.com/thenativeweb/defekt/issues/306)) ([15a83e2](https://github.com/thenativeweb/defekt/commit/15a83e203ad1d412ce00c8201d1c7b2198cd75c8))
+
 # [7.1.0](https://github.com/thenativeweb/defekt/compare/7.0.4...7.1.0) (2021-03-29)
 
 

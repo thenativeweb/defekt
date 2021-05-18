@@ -1,6 +1,6 @@
 {
   "name": "defekt",
-  "version": "7.1.0",
+  "version": "7.1.1",
   "description": "defekt is custom errors made simple.",
   "contributors": [
     {
@@ -32,8 +32,8 @@
   "types": "build/lib/index.d.ts",
   "dependencies": {},
   "devDependencies": {
-    "assertthat": "6.0.0",
-    "roboter": "11.6.40",
+    "assertthat": "6.0.1",
+    "roboter": "11.6.42",
     "semantic-release-configuration": "2.0.0"
   },
   "repository": {
