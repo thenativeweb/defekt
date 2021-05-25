@@ -1,3 +1,10 @@
+# [7.2.0](https://github.com/thenativeweb/defekt/compare/7.1.2...7.2.0) (2021-05-25)
+
+
+### Features
+
+* Add callback to unwrapOrThrow to transform errors. ([#314](https://github.com/thenativeweb/defekt/issues/314)) ([c7512d2](https://github.com/thenativeweb/defekt/commit/c7512d2c87ed3863baf996b5f5dbc8645232563f))
+
 ## [7.1.2](https://github.com/thenativeweb/defekt/compare/7.1.1...7.1.2) (2021-05-18)
 
 
