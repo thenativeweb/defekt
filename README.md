@@ -251,7 +251,7 @@ const token = validateToken('a token').unwrapOrDefault({ sub: 'anonymous' });
 const token = validateToken('a token').unwrapOrThrow();
 
 // If you want to transform the error to add additional information, or to
-// fulfil a more general error type, you can also pass a callback:
+// fulfill a more general error type, you can also pass a callback:
 const token = validateToken('a token').unwrapOrThrow(
   err => new BroaderError({ message: 'Something went wrong', cause: err })
 );
