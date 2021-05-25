@@ -2,7 +2,7 @@ interface ResultBase<TValue, TError extends Error> {
   hasError: () => this is ResultError<TValue, TError>;
   hasValue: () => this is ResultValue<TValue, TError>;
 
-  unwrapOrThrow: () => TValue;
+  unwrapOrThrow: (errorTransformer?: (err: TError) => Error) => TValue;
   unwrapOrElse: (handleError: (error: Error) => TValue) => TValue;
   unwrapOrDefault: (defaultValue: TValue) => TValue;
 }
@@ -19,7 +19,10 @@ const error = function <TValue, TError extends Error>(err: TError): ResultError<
     hasValue (): boolean {
       return false;
     },
-    unwrapOrThrow (): never {
+    unwrapOrThrow (errorTransformer?: (err: TError) => Error): never {
+      if (errorTransformer) {
+        throw errorTransformer(err);
+      }
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw err;
     },
