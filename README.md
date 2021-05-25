@@ -250,6 +250,12 @@ const token = validateToken('a token').unwrapOrDefault({ sub: 'anonymous' });
 // instead want to throw the error, possibly crashing your application:
 const token = validateToken('a token').unwrapOrThrow();
 
+// If you want to transform the error to add additional information, or to
+// fulfill a more general error type, you can also pass a callback:
+const token = validateToken('a token').unwrapOrThrow(
+  err => new BroaderError({ message: 'Something went wrong', cause: err })
+);
+
 // If you want to handle errors by returning a conditional default 
 // value, you can use `unwrapOrElse` to supply a handler:
 const token = validateToken('a token').unwrapOrElse(

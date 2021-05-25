@@ -110,6 +110,22 @@ suite('Result', (): void => {
         return true;
       });
     });
+
+    test('uses the given error transformers and throws the new error.', async (): Promise<void> => {
+      // eslint-disable-next-line unicorn/error-message
+      const err = new Error();
+      const errSecond = new Error('Second error.');
+
+      const result = error(err);
+
+      assert.that((): void => {
+        result.unwrapOrThrow((): Error => errSecond);
+      }).is.throwing((unwrappedError): boolean => {
+        assert.that(unwrappedError).is.equalTo(errSecond);
+
+        return true;
+      });
+    });
   });
 
   suite('unwrapOrElse', (): void => {
