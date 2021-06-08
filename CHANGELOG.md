@@ -1,3 +1,10 @@
+## [7.2.1](https://github.com/thenativeweb/defekt/compare/7.2.0...7.2.1) (2021-06-08)
+
+
+### Bug Fixes
+
+* bump glob-parent from 5.1.1 to 5.1.2 ([#320](https://github.com/thenativeweb/defekt/issues/320)) ([2f28e8d](https://github.com/thenativeweb/defekt/commit/2f28e8d3041958c67f0c4f78157d05cf4a7b3c16))
+
 # [7.2.0](https://github.com/thenativeweb/defekt/compare/7.1.2...7.2.0) (2021-05-25)
 
 
