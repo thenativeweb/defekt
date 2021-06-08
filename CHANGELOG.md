@@ -1,3 +1,10 @@
+## [7.2.2](https://github.com/thenativeweb/defekt/compare/7.2.1...7.2.2) (2021-06-08)
+
+
+### Bug Fixes
+
+* bump trim-newlines from 3.0.0 to 3.0.1 ([#319](https://github.com/thenativeweb/defekt/issues/319)) ([9c45b23](https://github.com/thenativeweb/defekt/commit/9c45b23dc291637bf5e94a4686fffaed37307dc3))
+
 ## [7.2.1](https://github.com/thenativeweb/defekt/compare/7.2.0...7.2.1) (2021-06-08)
 
 
