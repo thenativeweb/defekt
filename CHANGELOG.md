@@ -1,3 +1,10 @@
+## [7.2.3](https://github.com/thenativeweb/defekt/compare/7.2.2...7.2.3) (2021-06-10)
+
+
+### Bug Fixes
+
+* bump normalize-url from 6.0.0 to 6.0.1 ([#321](https://github.com/thenativeweb/defekt/issues/321)) ([719e1e2](https://github.com/thenativeweb/defekt/commit/719e1e2e6dfeb9f5afec81b1cd3d152c4aac892e))
+
 ## [7.2.2](https://github.com/thenativeweb/defekt/compare/7.2.1...7.2.2) (2021-06-08)
 
 
