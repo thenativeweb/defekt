@@ -32,7 +32,7 @@
   "types": "build/lib/index.d.ts",
   "dependencies": {},
   "devDependencies": {
-    "assertthat": "6.3.1",
+    "assertthat": "6.3.3",
     "roboter": "11.7.3",
     "semantic-release-configuration": "2.0.4"
   },
