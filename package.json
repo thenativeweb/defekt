@@ -30,11 +30,11 @@
   ],
   "main": "build/lib/index.js",
   "types": "build/lib/index.d.ts",
-  "dependencies": {},
   "devDependencies": {
     "assertthat": "6.3.3",
     "roboter": "11.7.7",
-    "semantic-release-configuration": "2.0.4"
+    "semantic-release-configuration": "2.0.4",
+    "tsd": "0.17.0"
   },
   "repository": {
     "type": "git",

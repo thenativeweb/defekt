@@ -1,5 +1,6 @@
 import { assert } from 'assertthat';
 import { defekt } from 'lib';
+import { expectType } from 'tsd';
 import { error, Result, value } from '../../lib/Result';
 
 suite('Result', (): void => {
@@ -213,39 +214,32 @@ suite('Result', (): void => {
         }
       }
     });
-    test('Results of the same error type match when the type is narrowed down to an error.', async (): Promise<void> => {
-      class CustomError extends Error {
-        public someProp = 0;
-      }
+  });
 
-      // This function compiling is enough for this test to pass.
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const someFunction = function (someResult: Result<string, CustomError>): Result<number, CustomError> {
-        if (someResult.hasError()) {
-          return someResult;
-        }
+  test('should be assignable to an result with the same error type if the result is known to be an error.', async (): Promise<void> => {
+    class CustomError extends Error {
+      public someProp = 0;
+    }
 
-        return error(new CustomError());
-      };
-    });
+    const someResult = value('some_string') as Result<string, CustomError>;
 
-    test('Results of the same value type match when the type is narrowed down to a value.', async (): Promise<void> => {
-      class CustomError1 extends Error {
-        public someProp = 1;
-      }
-      class CustomError2 extends Error {
-        public someOtherProp = 'some string';
-      }
+    if (someResult.hasError()) {
+      expectType<Result<number, CustomError>>(someResult);
+    }
+  });
 
-      // This function compiling is enough for this test to pass.
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const someFunction = function (someResult: Result<string, CustomError1>): Result<string, CustomError2> {
-        if (someResult.hasValue()) {
-          return someResult;
-        }
+  test('should be assignable to an result with the same value type if the result is known to be an value.', async (): Promise<void> => {
+    class CustomError1 extends Error {
+      public someProp = 0;
+    }
+    class CustomError2 extends Error {
+      public someOtherProp = 'some string';
+    }
 
-        return value('');
-      };
-    });
+    const someResult = value('some_string') as Result<string, CustomError1>;
+
+    if (someResult.hasValue()) {
+      expectType<Result<string, CustomError2>>(someResult);
+    }
   });
 });
