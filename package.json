@@ -2,9 +2,6 @@
   "name": "defekt",
   "version": "7.2.3",
   "description": "defekt is custom errors made simple.",
-  "tsd": {
-    "directory": "my-test-dir"
-  },
   "contributors": [
     {
       "name": "Golo Roden",
