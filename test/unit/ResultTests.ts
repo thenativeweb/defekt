@@ -1,6 +1,5 @@
 import { assert } from 'assertthat';
 import { defekt } from 'lib';
-import { expectType } from 'tsd';
 import { error, Result, value } from '../../lib/Result';
 
 suite('Result', (): void => {
@@ -216,19 +215,23 @@ suite('Result', (): void => {
     });
   });
 
-  test('should be assignable to an result with the same error type if the result is known to be an error.', async (): Promise<void> => {
+  test('is assignable to an result with the same error type if the result is known to be an error.', async (): Promise<void> => {
     class CustomError extends Error {
       public someProp = 0;
     }
 
-    const someResult = value('some_string') as Result<string, CustomError>;
+    // This function compiling it enough for this test.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const someFunction = function (someResult: Result<number, CustomError>): Result<string, CustomError> {
+      if (someResult.hasError()) {
+        return someResult;
+      }
 
-    if (someResult.hasError()) {
-      expectType<Result<number, CustomError>>(someResult);
-    }
+      return error(new CustomError());
+    };
   });
 
-  test('should be assignable to an result with the same value type if the result is known to be an value.', async (): Promise<void> => {
+  test('is assignable to an result with the same value type if the result is known to be an value.', async (): Promise<void> => {
     class CustomError1 extends Error {
       public someProp = 0;
     }
@@ -236,10 +239,14 @@ suite('Result', (): void => {
       public someOtherProp = 'some string';
     }
 
-    const someResult = value('some_string') as Result<string, CustomError1>;
+    // This function compiling it enough for this test.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const someFunction = function (someResult: Result<string, CustomError1>): Result<string, CustomError2> {
+      if (someResult.hasValue()) {
+        return someResult;
+      }
 
-    if (someResult.hasValue()) {
-      expectType<Result<string, CustomError2>>(someResult);
-    }
+      return value('');
+    };
   });
 });

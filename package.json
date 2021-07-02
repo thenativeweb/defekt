@@ -2,6 +2,9 @@
   "name": "defekt",
   "version": "7.2.3",
   "description": "defekt is custom errors made simple.",
+  "tsd": {
+    "directory": "my-test-dir"
+  },
   "contributors": [
     {
       "name": "Golo Roden",
@@ -30,11 +33,11 @@
   ],
   "main": "build/lib/index.js",
   "types": "build/lib/index.d.ts",
+  "dependencies": {},
   "devDependencies": {
     "assertthat": "6.3.3",
     "roboter": "11.7.7",
-    "semantic-release-configuration": "2.0.4",
-    "tsd": "0.17.0"
+    "semantic-release-configuration": "2.0.4"
   },
   "repository": {
     "type": "git",
