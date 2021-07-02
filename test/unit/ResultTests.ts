@@ -213,5 +213,39 @@ suite('Result', (): void => {
         }
       }
     });
+    test('Results of the same error type match when the type is narrowed down to an error.', async (): Promise<void> => {
+      class CustomError extends Error {
+        public someProp = 0;
+      }
+
+      // This function compiling is enough for this test to pass.
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const someFunction = function (someResult: Result<string, CustomError>): Result<number, CustomError> {
+        if (someResult.hasError()) {
+          return someResult;
+        }
+
+        return error(new CustomError());
+      };
+    });
+
+    test('Results of the same value type match when the type is narrowed down to a value.', async (): Promise<void> => {
+      class CustomError1 extends Error {
+        public someProp = 1;
+      }
+      class CustomError2 extends Error {
+        public someOtherProp = 'some string';
+      }
+
+      // This function compiling is enough for this test to pass.
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const someFunction = function (someResult: Result<string, CustomError1>): Result<string, CustomError2> {
+        if (someResult.hasValue()) {
+          return someResult;
+        }
+
+        return value('');
+      };
+    });
   });
 });
