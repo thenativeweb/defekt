@@ -215,7 +215,7 @@ suite('Result', (): void => {
     });
   });
 
-  test('is assignable to an result with the same error type if the result is known to be an error.', async (): Promise<void> => {
+  test('is assignable to a result with the same error type if the result is known to be an error.', async (): Promise<void> => {
     class CustomError extends Error {
       public someProp = 0;
     }
@@ -231,7 +231,7 @@ suite('Result', (): void => {
     };
   });
 
-  test('is assignable to an result with the same value type if the result is known to be an value.', async (): Promise<void> => {
+  test('is assignable to a result with the same value type if the result is known to be an value.', async (): Promise<void> => {
     class CustomError1 extends Error {
       public someProp = 0;
     }
