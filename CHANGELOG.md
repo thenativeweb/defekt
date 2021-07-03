@@ -1,3 +1,10 @@
+# [7.3.0](https://github.com/thenativeweb/defekt/compare/7.2.3...7.3.0) (2021-07-03)
+
+
+### Features
+
+* Make early returns after error/value checks more convenient ([#326](https://github.com/thenativeweb/defekt/issues/326)) ([e27d0e5](https://github.com/thenativeweb/defekt/commit/e27d0e5c65822b8c36a519816f47cf5a3f04c411))
+
 ## [7.2.3](https://github.com/thenativeweb/defekt/compare/7.2.2...7.2.3) (2021-06-10)
 
 
