@@ -1,3 +1,10 @@
+## [7.3.1](https://github.com/thenativeweb/defekt/compare/7.3.0...7.3.1) (2021-07-12)
+
+
+### Bug Fixes
+
+* Restructure type hierarchy so that types don't conflict internally. ([#330](https://github.com/thenativeweb/defekt/issues/330)) ([610302d](https://github.com/thenativeweb/defekt/commit/610302d31f2fe350393994fb84e8e6160657aca5))
+
 # [7.3.0](https://github.com/thenativeweb/defekt/compare/7.2.3...7.3.0) (2021-07-03)
 
 
