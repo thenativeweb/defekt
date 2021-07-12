@@ -1,17 +1,17 @@
 interface ResultBase<TValue, TError extends Error> {
-  hasError: () => this is ResultError<TError>;
-  hasValue: () => this is ResultValue<TValue>;
+  hasError: () => this is ResultError<TError> & ResultBase<any, TError>;
+  hasValue: () => this is ResultValue<TValue> & ResultBase<TValue, any>;
 
   unwrapOrThrow: (errorTransformer?: (err: TError) => Error) => TValue;
   unwrapOrElse: (handleError: (error: Error) => TValue) => TValue;
   unwrapOrDefault: (defaultValue: TValue) => TValue;
 }
 
-interface ResultError<TError extends Error> extends ResultBase<unknown, TError> {
+interface ResultError<TError extends Error> {
   error: TError;
 }
 
-const error = function <TError extends Error>(err: TError): ResultError<TError> {
+const error = function <TError extends Error>(err: TError): ResultError<TError> & ResultBase<any, TError> {
   return {
     hasError (): boolean {
       return true;
@@ -36,14 +36,14 @@ const error = function <TError extends Error>(err: TError): ResultError<TError> 
   };
 };
 
-interface ResultValue<TValue> extends ResultBase<TValue, Error> {
+interface ResultValue<TValue> {
   value: TValue;
 }
 
 const value: {
-  <TValue extends undefined>(): ResultValue<TValue>;
-  <TValue>(value: TValue): ResultValue<TValue>;
-} = function <TValue>(val?: TValue): ResultValue<TValue | undefined> {
+  <TValue extends undefined>(): ResultValue<TValue> & ResultBase<TValue, any>;
+  <TValue>(value: TValue): ResultValue<TValue> & ResultBase<TValue, any>;
+} = function <TValue>(val?: TValue): ResultValue<TValue | undefined> & ResultBase<TValue | undefined, any> {
   return {
     hasError (): boolean {
       return false;
@@ -64,7 +64,7 @@ const value: {
   };
 };
 
-type Result<TValue, TError extends Error> = ResultValue<TValue> | ResultError<TError>;
+type Result<TValue, TError extends Error> = ResultBase<TValue, TError>;
 
 export type {
   ResultValue,

@@ -2,6 +2,18 @@ import { assert } from 'assertthat';
 import { defekt } from 'lib';
 import { error, Result, value } from '../../lib/Result';
 
+interface Value {
+  foo: string;
+}
+
+const getValue = function (): Result<Value, Error> {
+  return value({ foo: 'bar' });
+};
+const getError = function (): Result<Value, Error> {
+  // eslint-disable-next-line unicorn/error-message
+  return error(new Error());
+};
+
 suite('Result', (): void => {
   suite('error', (): void => {
     test('constructs the ResultError type.', async (): Promise<void> => {
@@ -49,8 +61,7 @@ suite('Result', (): void => {
 
   suite('hasError', (): void => {
     test(`returns true for something constructed with 'error()'.`, async (): Promise<void> => {
-      // eslint-disable-next-line unicorn/error-message
-      const result = error(new Error());
+      const result = getError();
 
       const resultHasError = result.hasError();
 
@@ -58,17 +69,26 @@ suite('Result', (): void => {
     });
 
     test(`returns false for something constructed with 'value()'.`, async (): Promise<void> => {
-      const result = value({ foo: 'bar' });
+      const result = getValue();
 
       const resultHasError = result.hasError();
 
       assert.that(resultHasError).is.false();
     });
+
+    test(`narrows the type to the error case and discards value type information.`, async (): Promise<void> => {
+      const result = getValue();
+
+      if (result.hasError()) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const newResult: Result<{ something: 'elseEntirely' }, Error> = result;
+      }
+    });
   });
 
   suite('hasValue', (): void => {
     test(`returns true for something constructed with 'value()'.`, async (): Promise<void> => {
-      const result = value({ foo: 'bar' });
+      const result = getValue();
 
       const resultHasValue = result.hasValue();
 
@@ -76,22 +96,34 @@ suite('Result', (): void => {
     });
 
     test(`returns false for something constructed with 'error()'.`, async (): Promise<void> => {
-      // eslint-disable-next-line unicorn/error-message
-      const result = error(new Error());
+      const result = getError();
 
       const resultHasValue = result.hasValue();
 
       assert.that(resultHasValue).is.false();
     });
+
+    test(`narrows the type to the value case and discards error type information.`, async (): Promise<void> => {
+      const result = getValue();
+
+      interface CustomError extends Error {
+        bar: string;
+      }
+
+      if (result.hasValue()) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const newResult: Result<Value, CustomError> = result;
+      }
+    });
   });
 
   suite('unwrapOrThrow', (): void => {
-    test('unwraps the result if it does not have an error.', async (): Promise<void> => {
+    test('unwraps the result with the correct value type if it does not have an error.', async (): Promise<void> => {
       const val = { foo: 'bar' };
 
-      const result = value(val);
+      const result = value(val) as Result<Value, Error>;
 
-      const unwrappedResult = result.unwrapOrThrow();
+      const unwrappedResult: Value = result.unwrapOrThrow();
 
       assert.that(unwrappedResult).is.equalTo(val);
     });
@@ -147,9 +179,9 @@ suite('Result', (): void => {
       const val = { foo: 'bar' };
       const errorHandler = (): { foo: string } => val;
 
-      const result = error(err);
+      const result = error(err) as Result<Value, Error>;
 
-      const unwrappedResult = result.unwrapOrElse(errorHandler);
+      const unwrappedResult: Value = result.unwrapOrElse(errorHandler);
 
       assert.that(unwrappedResult).is.equalTo(val);
     });
@@ -160,9 +192,9 @@ suite('Result', (): void => {
       const val = { foo: 'bar' };
       const defaultValue = { foo: 'not-bar' };
 
-      const result = value(val);
+      const result = value(val) as Result<Value, Error>;
 
-      const unwrappedResult = result.unwrapOrDefault(defaultValue);
+      const unwrappedResult: Value = result.unwrapOrDefault(defaultValue);
 
       assert.that(unwrappedResult).is.equalTo(val);
     });
@@ -172,9 +204,9 @@ suite('Result', (): void => {
       const err = new Error();
       const defaultValue = { foo: 'bar' };
 
-      const result = error(err);
+      const result = error(err) as Result<Value, Error>;
 
-      const unwrappedResult = result.unwrapOrDefault(defaultValue);
+      const unwrappedResult: Value = result.unwrapOrDefault(defaultValue);
 
       assert.that(unwrappedResult).is.equalTo(defaultValue);
     });
