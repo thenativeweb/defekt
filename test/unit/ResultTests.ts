@@ -76,13 +76,15 @@ suite('Result', (): void => {
       assert.that(resultHasError).is.false();
     });
 
-    test(`narrows the type to the error case and discards value type information.`, async (): Promise<void> => {
+    test('extrapolates value type correctly.', async (): Promise<void> => {
       const result = getValue();
 
       if (result.hasError()) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const newResult: Result<{ something: 'elseEntirely' }, Error> = result;
+        return;
       }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const containedValue: Value = result.value;
     });
   });
 
@@ -103,17 +105,15 @@ suite('Result', (): void => {
       assert.that(resultHasValue).is.false();
     });
 
-    test(`narrows the type to the value case and discards error type information.`, async (): Promise<void> => {
-      const result = getValue();
-
-      interface CustomError extends Error {
-        bar: string;
-      }
+    test('extrapolates error type correctly.', async (): Promise<void> => {
+      const result = getError();
 
       if (result.hasValue()) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const newResult: Result<Value, CustomError> = result;
+        return;
       }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const containedError = result.error;
     });
   });
 
@@ -245,40 +245,5 @@ suite('Result', (): void => {
         }
       }
     });
-  });
-
-  test('is assignable to a result with the same error type if the result is known to be an error.', async (): Promise<void> => {
-    class CustomError extends Error {
-      public someProp = 0;
-    }
-
-    // This function compiling it enough for this test.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const someFunction = function (someResult: Result<number, CustomError>): Result<string, CustomError> {
-      if (someResult.hasError()) {
-        return someResult;
-      }
-
-      return error(new CustomError());
-    };
-  });
-
-  test('is assignable to a result with the same value type if the result is known to be an value.', async (): Promise<void> => {
-    class CustomError1 extends Error {
-      public someProp = 0;
-    }
-    class CustomError2 extends Error {
-      public someOtherProp = 'some string';
-    }
-
-    // This function compiling it enough for this test.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const someFunction = function (someResult: Result<string, CustomError1>): Result<string, CustomError2> {
-      if (someResult.hasValue()) {
-        return someResult;
-      }
-
-      return value('');
-    };
   });
 });
