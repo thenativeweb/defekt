@@ -1,3 +1,10 @@
+## [7.3.2](https://github.com/thenativeweb/defekt/compare/7.3.1...7.3.2) (2021-07-23)
+
+
+### Bug Fixes
+
+* Remove type information discarding. ([#332](https://github.com/thenativeweb/defekt/issues/332)) ([bfa3e56](https://github.com/thenativeweb/defekt/commit/bfa3e56d2c8394a7968ffb05d6c52e614f3b3522))
+
 ## [7.3.1](https://github.com/thenativeweb/defekt/compare/7.3.0...7.3.1) (2021-07-12)
 
 
