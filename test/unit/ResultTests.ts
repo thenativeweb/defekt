@@ -84,6 +84,17 @@ suite('Result', (): void => {
         const newResult: Result<{ something: 'elseEntirely' }, Error> = result;
       }
     });
+
+    test('extrapolates value type correctly.', async (): Promise<void> => {
+      const result = getValue();
+
+      if (result.hasError()) {
+        return;
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const containedValue: Value = result.value;
+    });
   });
 
   suite('hasValue', (): void => {
@@ -114,6 +125,17 @@ suite('Result', (): void => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const newResult: Result<Value, CustomError> = result;
       }
+    });
+
+    test('extrapolates error type correctly.', async (): Promise<void> => {
+      const result = getError();
+
+      if (result.hasValue()) {
+        return;
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const containedError = result.error;
     });
   });
 
@@ -252,7 +274,7 @@ suite('Result', (): void => {
       public someProp = 0;
     }
 
-    // This function compiling it enough for this test.
+    // This function compiling is enough for this test.
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const someFunction = function (someResult: Result<number, CustomError>): Result<string, CustomError> {
       if (someResult.hasError()) {
@@ -271,7 +293,7 @@ suite('Result', (): void => {
       public someOtherProp = 'some string';
     }
 
-    // This function compiling it enough for this test.
+    // This function compiling is enough for this test.
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const someFunction = function (someResult: Result<string, CustomError1>): Result<string, CustomError2> {
       if (someResult.hasValue()) {
