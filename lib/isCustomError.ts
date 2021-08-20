@@ -1,10 +1,10 @@
 import { CustomError } from './CustomError';
-import { ErrorConstructor } from './ErrorConstructor';
+import { CustomErrorConstructor } from './CustomErrorConstructor';
 import { isError } from './isError';
 
 const isCustomError = function <TErrorName extends string>(
   ex: any,
-  errorType?: ErrorConstructor<TErrorName>
+  errorType?: CustomErrorConstructor<TErrorName>
 ): ex is CustomError<TErrorName> {
   return (
     isError(ex) &&

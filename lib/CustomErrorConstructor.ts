@@ -1,6 +1,6 @@
 import { CustomError } from './CustomError';
 
-interface ErrorConstructor<TErrorName extends string> {
+interface CustomErrorConstructor<TErrorName extends string> {
   new(
     parameters?: string | { cause?: unknown; data?: any; message?: string }
   ): CustomError<TErrorName>;
@@ -9,5 +9,5 @@ interface ErrorConstructor<TErrorName extends string> {
 }
 
 export type {
-  ErrorConstructor
+  CustomErrorConstructor
 };

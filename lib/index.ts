@@ -1,6 +1,6 @@
 import { CustomError } from './CustomError';
+import { CustomErrorConstructor } from './CustomErrorConstructor';
 import { defekt } from './defekt';
-import { ErrorConstructor } from './ErrorConstructor';
 import { isCustomError } from './isCustomError';
 import { isError } from './isError';
 import { isResult } from './isResult';
@@ -17,6 +17,6 @@ export {
 };
 
 export type {
-  ErrorConstructor,
+  CustomErrorConstructor,
   Result
 };

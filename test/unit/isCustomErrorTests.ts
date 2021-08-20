@@ -59,7 +59,6 @@ suite('isCustomError', (): void => {
     class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw new TokenInvalid();
     } catch (ex: unknown) {
       if (isCustomError(ex)) {
