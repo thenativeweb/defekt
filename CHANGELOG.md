@@ -1,3 +1,10 @@
+## [7.3.3](https://github.com/thenativeweb/defekt/compare/7.3.2...7.3.3) (2021-08-22)
+
+
+### Bug Fixes
+
+* bump path-parse from 1.0.6 to 1.0.7 ([#337](https://github.com/thenativeweb/defekt/issues/337)) ([8fe870d](https://github.com/thenativeweb/defekt/commit/8fe870db0973246a4573edc56e143c8a17e2f8e9))
+
 ## [7.3.2](https://github.com/thenativeweb/defekt/compare/7.3.1...7.3.2) (2021-07-23)
 
 
