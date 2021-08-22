@@ -1,5 +1,5 @@
 import { assert } from 'assertthat';
-import { defekt } from 'lib';
+import { defekt } from '../../lib';
 import { error, Result, value } from '../../lib/Result';
 
 interface Value {
@@ -216,7 +216,6 @@ suite('Result', (): void => {
     test('a function that returns a Result can reasonably be used and the types make sense.', async (): Promise<void> => {
       class CustomError extends defekt({ code: 'CustomError' }) {}
 
-      // eslint-disable-next-line unicorn/consistent-function-scoping
       const getFirstElement = function <TValue>(array: TValue[]): Result<TValue, CustomError> {
         if (array.length > 0) {
           return value(array[0]);

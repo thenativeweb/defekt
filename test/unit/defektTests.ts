@@ -106,7 +106,6 @@ suite('defekt', (): void => {
     class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
     class TokenExpired extends defekt({ code: 'TokenExpired' }) {}
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const ex: TokenInvalid | TokenExpired = {} as any;
 
     switch (ex.code) {

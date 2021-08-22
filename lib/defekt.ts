@@ -1,5 +1,5 @@
 import { CustomError } from './CustomError';
-import { ErrorConstructor } from './ErrorConstructor';
+import { CustomErrorConstructor } from './CustomErrorConstructor';
 import { formatErrorMessage } from './formatErrorMessage';
 
 const defekt = function <TErrorCode extends string>({
@@ -8,7 +8,7 @@ const defekt = function <TErrorCode extends string>({
 }: {
   code: TErrorCode;
   defaultMessage?: string;
-}): ErrorConstructor<TErrorCode> {
+}): CustomErrorConstructor<TErrorCode> {
   return class extends CustomError<TErrorCode> {
     public static code: TErrorCode = code;
 
