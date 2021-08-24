@@ -1,3 +1,18 @@
+# [8.0.0](https://github.com/thenativeweb/defekt/compare/7.3.3...8.0.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* rename ErrorConstructor to CustomErrorConstructor ([#340](https://github.com/thenativeweb/defekt/issues/340)) ([d581477](https://github.com/thenativeweb/defekt/commit/d581477879d24b9c53b3349a853170387ff25762))
+
+
+### BREAKING CHANGES
+
+* ErrorConstructor was renamed to CustomErrorConstructor
+
+If you're currently importing the ErrorConstructor interface from
+defekt, you will need to change these import to CustomErrorConstructor.
+
 ## [7.3.3](https://github.com/thenativeweb/defekt/compare/7.3.2...7.3.3) (2021-08-22)
 
 
