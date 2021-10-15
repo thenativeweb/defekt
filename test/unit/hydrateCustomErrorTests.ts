@@ -103,4 +103,16 @@ suite('hydrateCustomError', (): void => {
 
     assert.that(hydrateResult).is.anErrorWithMessage('The given error has a cause that could not be hydrated.');
   });
+
+  test('can hydrate serialized and deserialized errors.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    const ex = new TokenInvalid();
+    const hydratedEx = hydrateCustomError({
+      rawEx: JSON.parse(JSON.stringify(ex)),
+      potentialErrorConstructors: [ TokenInvalid ]
+    }).unwrapOrThrow();
+
+    assert.that(isCustomError(hydratedEx, TokenInvalid)).is.true();
+  });
 });

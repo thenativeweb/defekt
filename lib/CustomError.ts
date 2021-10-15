@@ -19,15 +19,15 @@ class CustomError<TErrorName extends string = string> extends Error {
   }
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  public toJSON (): string {
-    return JSON.stringify({
+  public toJSON (): any {
+    return {
       name: this.name,
       message: this.message,
       code: this.code,
       data: this.data,
       cause: this.cause,
       stack: this.stack
-    });
+    };
   }
 }
 
