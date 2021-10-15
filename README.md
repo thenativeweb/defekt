@@ -117,6 +117,22 @@ try {
 const error = new TokenMalformed({ data: { foo: 'bar' }});
 ```
 
+#### Hydrating errors
+
+Sometimes you need to serialize and deserialize your errors. Afterwards they are missing their prototype-chain and Error-related functionality. To restore those, you can hydrate a raw object to a `CustomError`-instance:
+
+```typescript
+import { defekt, hydrateCustomError } from 'defekt';
+
+class TokenMalformed extends defekt({ code: 'TokenMalformed' }) {}
+
+const rawEx = JSON.parse(tokenMalformedErrorFromSomewhere);
+
+const ex = hydrateCustomError({rawEx, potentialErrorConstructors: [ TokenMalformed ]}).unwrapOrThrow();
+```
+
+If the raw error can not be hydrated using one of the given potential error constructors, an error will be returned.
+
 ### Using custom error type-guards
 
 Custom errors can be type-guarded using `isCustomError`. With only one parameter it specifies an error's type to `CustomError`:
