@@ -119,7 +119,7 @@ const error = new TokenMalformed({ data: { foo: 'bar' }});
 
 #### Hydrating errors
 
-Sometimes you need to serialize and deserialize your errors. Afterwards they are missing their prototype-chain and Error-related functionality. To restore those, you can hydrate a raw object to a `CustomError`-instance:
+Sometimes you need to serialize and deserialize your errors. Afterwards they are missing their prototype-chain and `Error`-related functionality. To restore those, you can hydrate a raw object to a `CustomError`-instance:
 
 ```typescript
 import { defekt, hydrateCustomError } from 'defekt';
@@ -128,10 +128,10 @@ class TokenMalformed extends defekt({ code: 'TokenMalformed' }) {}
 
 const rawEx = JSON.parse(tokenMalformedErrorFromSomewhere);
 
-const ex = hydrateCustomError({rawEx, potentialErrorConstructors: [ TokenMalformed ]}).unwrapOrThrow();
+const ex = hydrateCustomError({ rawEx, potentialErrorConstructors: [ TokenMalformed ] }).unwrapOrThrow();
 ```
 
-If the raw error can not be hydrated using one of the given potential error constructors, an error will be returned.
+Note that the hydrated error is wrapped in a `Result`. If the raw error can not be hydrated using one of the given potential error constructors, an error-`Result` will be returned, which tells you, why the hydration was unsuccessful.
 
 ### Using custom error type-guards
 
@@ -304,7 +304,7 @@ if (isResult(someValue)) {
 
 ### Hydrating a `Result`
 
-Like for errors, there is a function to hydrate a `Result` from raw data in case you need to serialize and deserialize a `Result`. Be careful with this, however: The hydration function is designed to accept everything as a valid result and treat its input as a `Result<undefined, any>` if it cannot find either a value or an error. So make sure that you are confident that the value you hydrate is actually something that makes sense as a `Result`.
+Like for errors, there is a function to hydrate a `Result` from raw data in case you need to serialize and deserialize a `Result`. Be careful with this, however: The hydration function is designed to accept everything as a valid result and treat its input as a `Result<undefined, any>` if it cannot find either a value or an error. So make sure that you are confident that the value you hydrate is actually something that makes sense as a `Result`:
 
 ```typescript
 import { defekt, hydrateResult } from 'defekt';
