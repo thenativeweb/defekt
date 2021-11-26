@@ -1,7 +1,7 @@
 const formatErrorMessage = function ({ code }: {
   code: string;
 }): string {
-  const almostFormattedErrorMessage = [ ...code].
+  const almostFormattedErrorMessage = [ ...code ].
     map((character: string, index: number): string => {
       if (index === 0) {
         return character.toUpperCase();
