@@ -1,3 +1,7 @@
+import { defekt } from './defekt';
+
+class ResultDoesNotContainError extends defekt({ code: 'ResultDoesNotContainError' }) {}
+
 interface ResultBase<TValue, TError extends Error> {
   hasError: () => this is ResultError<TValue, TError>;
   hasValue: () => this is ResultValue<TValue, TError>;
@@ -5,6 +9,8 @@ interface ResultBase<TValue, TError extends Error> {
   unwrapOrThrow: (errorTransformer?: (err: TError) => Error) => TValue;
   unwrapOrElse: (handleError: (error: Error) => TValue) => TValue;
   unwrapOrDefault: (defaultValue: TValue) => TValue;
+
+  unwrapErrorOrThrow: () => TError;
 }
 
 interface ResultError<TValue, TError extends Error> extends ResultBase<TValue, TError> {
@@ -31,6 +37,9 @@ const error = function <TValue, TError extends Error>(err: TError): ResultError<
     },
     unwrapOrDefault (defaultValue: TValue): TValue {
       return defaultValue;
+    },
+    unwrapErrorOrThrow (): TError {
+      return err;
     },
     error: err
   };
@@ -60,6 +69,9 @@ const value: {
     unwrapOrDefault (): TValue | undefined {
       return val;
     },
+    unwrapErrorOrThrow (): TError {
+      throw new ResultDoesNotContainError();
+    },
     value: val
   };
 };
@@ -73,6 +85,8 @@ export type {
 };
 
 export {
+  ResultDoesNotContainError,
+
   value,
   error
 };
