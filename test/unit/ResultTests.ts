@@ -1,6 +1,7 @@
 import { assert } from 'assertthat';
 import { defekt } from '../../lib';
-import { error, Result, value } from '../../lib/Result';
+import { isCustomError } from '../../lib/isCustomError';
+import { error, Result, ResultDoesNotContainError, value } from '../../lib/Result';
 
 interface Value {
   foo: string;
@@ -209,6 +210,29 @@ suite('Result', (): void => {
       const unwrappedResult: Value = result.unwrapOrDefault(defaultValue);
 
       assert.that(unwrappedResult).is.equalTo(defaultValue);
+    });
+  });
+
+  suite('unwrapErrorOrThrow', (): void => {
+    test('unwraps the error with the correct error type if the result contains an error.', async (): Promise<void> => {
+      class CustomError extends defekt({ code: 'CustomError' }) {}
+
+      const err = new CustomError();
+      const result = error(err) as Result<Value, CustomError>;
+
+      const containedError: CustomError = result.unwrapErrorOrThrow();
+
+      assert.that(containedError).is.equalTo(err);
+    });
+
+    test('throws a ResultDoesNotContainError error if the result does not contain an error.', async (): Promise<void> => {
+      class CustomError extends defekt({ code: 'CustomError' }) {}
+
+      const result = value({ foo: 'foo' }) as Result<Value, CustomError>;
+
+      assert.that((): void => {
+        result.unwrapErrorOrThrow();
+      }).is.throwing((ex: Error): boolean => isCustomError(ex, ResultDoesNotContainError));
     });
   });
 
