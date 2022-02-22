@@ -20,14 +20,27 @@ class CustomError<TErrorName extends string = string> extends Error {
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   public toJSON (): any {
-    return {
+    const serializableObject: any = {
       name: this.name,
       message: this.message,
       code: this.code,
-      data: this.data,
-      cause: this.cause,
       stack: this.stack
     };
+
+    try {
+      JSON.stringify(this.data);
+      serializableObject.data = this.data;
+    } catch {
+      // If data is not serializable, we want to omit it from the returned object.
+    }
+    try {
+      JSON.stringify(this.cause);
+      serializableObject.cause = this.cause;
+    } catch {
+      // If data is not serializable, we want to omit it from the returned object.
+    }
+
+    return serializableObject;
   }
 }
 
