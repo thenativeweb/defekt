@@ -24,7 +24,7 @@ suite('hydrateCustomError', (): void => {
     }).unwrapOrThrow();
 
     assert.that(isCustomError(ex, TokenInvalid)).is.true();
-    assert.that(isCustomError(ex.cause, TokenExpired)).is.true();
+    assert.that(ex.cause).is.equalTo(rawEx.cause);
   });
 
   test('fails to hydrate an error that is missing a name.', async (): Promise<void> => {
@@ -84,24 +84,6 @@ suite('hydrateCustomError', (): void => {
     });
 
     assert.that(hydrateResult).is.anErrorWithMessage('Could not find an appropriate ErrorConstructor to hydrate the given error.');
-  });
-
-  test('fails to hydrate an error if its cause can not be hydrated.', async (): Promise<void> => {
-    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
-
-    const rawEx = {
-      name: 'TokenInvalid',
-      code: 'TokenInvalid',
-      message: 'Foo',
-      cause: {}
-    };
-
-    const hydrateResult = hydrateCustomError({
-      rawEx,
-      potentialErrorConstructors: [ TokenInvalid ]
-    });
-
-    assert.that(hydrateResult).is.anErrorWithMessage('The given error has a cause that could not be hydrated.');
   });
 
   test('can hydrate serialized and deserialized errors.', async (): Promise<void> => {

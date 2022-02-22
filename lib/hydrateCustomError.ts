@@ -38,17 +38,7 @@ const hydrateCustomError = function<TPotentialCustomErrorNames extends string = 
 
   const stack = rawEx?.stack;
   const data = rawEx?.data;
-  let cause: undefined | Error;
-
-  if ('cause' in rawEx && rawEx.cause !== undefined) {
-    const causeResult = hydrateCustomError({ rawEx: rawEx.cause, potentialErrorConstructors });
-
-    if (causeResult.hasError()) {
-      return error(new HydratingErrorFailed({ message: 'The given error has a cause that could not be hydrated.', cause: causeResult.error }));
-    }
-
-    cause = causeResult.value;
-  }
+  const cause = rawEx?.cause;
 
   const hydratedError = new ActualErrorConstructor({ message: rawEx.message, cause, data });
 
