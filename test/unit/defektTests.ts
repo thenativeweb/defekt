@@ -121,4 +121,54 @@ suite('defekt', (): void => {
       }
     }
   });
+
+  test('creates a custom error that serializes to JSON in a meaningful way.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    const cause = new TokenInvalid();
+    const ex = new TokenInvalid({ message: 'Foo', data: { foo: 'bar' }, cause });
+
+    assert.that(JSON.stringify(ex)).is.equalTo(JSON.stringify({
+      name: 'TokenInvalid',
+      message: formatErrorMessage({ code: 'TokenInvalid' }),
+      code: 'TokenInvalid',
+      stack: ex.stack,
+      data: { foo: 'bar' },
+      cause: JSON.stringify(cause)
+    }));
+  });
+
+  test('creates a custom error that serializes to JSON and omits cause if it is not serializable.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    const objectA: any = {};
+    const objectB: any = { objectA };
+
+    objectA.objectB = objectB;
+    const ex = new TokenInvalid({ message: 'Foo', cause: objectA });
+
+    assert.that(JSON.stringify(ex)).is.equalTo(JSON.stringify({
+      name: 'TokenInvalid',
+      message: formatErrorMessage({ code: 'TokenInvalid' }),
+      code: 'TokenInvalid',
+      stack: ex.stack
+    }));
+  });
+
+  test('creates a custom error that serializes to JSON and omits data if it is not serializable.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    const objectA: any = {};
+    const objectB: any = { objectA };
+
+    objectA.objectB = objectB;
+    const ex = new TokenInvalid({ message: 'Foo', data: objectA });
+
+    assert.that(JSON.stringify(ex)).is.equalTo(JSON.stringify({
+      name: 'TokenInvalid',
+      message: formatErrorMessage({ code: 'TokenInvalid' }),
+      code: 'TokenInvalid',
+      stack: ex.stack
+    }));
+  });
 });
