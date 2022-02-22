@@ -5,12 +5,12 @@ import { error, Result, value } from './Result';
 
 class HydratingErrorFailed extends defekt({ code: 'HydratingErrorFailed' }) {}
 
-const hydrateCustomError = function ({
+const hydrateCustomError = function<TPotentialCustomErrorNames extends string = string> ({
   rawEx, potentialErrorConstructors
 }: {
   rawEx: any;
-  potentialErrorConstructors: CustomErrorConstructor<any>[];
-}): Result<CustomError, HydratingErrorFailed> {
+  potentialErrorConstructors: CustomErrorConstructor<TPotentialCustomErrorNames>[];
+}): Result<CustomError<TPotentialCustomErrorNames>, HydratingErrorFailed> {
   if (typeof rawEx !== 'object' || rawEx === null) {
     return error(new HydratingErrorFailed('The given error is not an object.'));
   }
