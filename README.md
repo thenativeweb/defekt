@@ -329,6 +329,8 @@ if (hydrationResult.hasError()) {
 }
 ```
 
+You can also optionally let `hydrateResult` hydrate the contained error by passing `potentialErrorConstructors`. This works identically to `hydrateResult`.
+
 ## Running quality assurance
 
 To run quality assurance for this module use [roboter](https://www.npmjs.com/package/roboter):
