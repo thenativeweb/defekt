@@ -1,3 +1,10 @@
+# [8.1.0](https://github.com/thenativeweb/defekt/compare/8.0.0...8.1.0) (2022-01-17)
+
+
+### Features
+
+* Add `unwrapErrorOrThrow`. ([#350](https://github.com/thenativeweb/defekt/issues/350)) ([8e0cafd](https://github.com/thenativeweb/defekt/commit/8e0cafd43ce34d0a861f31d8226b0d59f7581833)), closes [#349](https://github.com/thenativeweb/defekt/issues/349)
+
 # [8.0.0](https://github.com/thenativeweb/defekt/compare/7.3.3...8.0.0) (2021-08-24)
 
 
