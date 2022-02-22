@@ -309,17 +309,23 @@ if (isResult(someValue)) {
 
 ### Hydrating a `Result`
 
-Like for errors, there is a function to hydrate a `Result` from raw data in case you need to serialize and deserialize a `Result`. Be careful with this, however: The hydration function is designed to accept everything as a valid result and treat its input as a `Result<undefined, any>` if it cannot find either a value or an error. So make sure that you are confident that the value you hydrate is actually something that makes sense as a `Result`:
+Like for errors, there is a function to hydrate a `Result` from raw data in case you need to serialize and deserialize a `Result`.
 
 ```typescript
 import { defekt, hydrateResult } from 'defekt';
 
 const rawResult = JSON.parse(resultFromSomewhere);
 
-const result = hydrateResult({ rawResult });
+const hydrationResult = hydrateResult({ rawResult });
 
-if (result.hasError()) {
-    // Continue with your normal error handling. Just note that you might have to hydrate the contained error as well.
+if (hydrationResult.hasError()) {
+    // The hydration has failed.
+} else {
+    const result = hydrationResult.value;
+    
+    if (result.hasError()) {
+        // Continue with your normal error handling.
+    }
 }
 ```
 
