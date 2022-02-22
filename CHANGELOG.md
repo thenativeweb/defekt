@@ -1,3 +1,10 @@
+# [8.2.0](https://github.com/thenativeweb/defekt/compare/8.1.0...8.2.0) (2022-02-22)
+
+
+### Features
+
+* Hydrate CustomError and Result. ([#344](https://github.com/thenativeweb/defekt/issues/344)) ([3f4343c](https://github.com/thenativeweb/defekt/commit/3f4343c06ebceea735f5f086768cdfc5c2e04340))
+
 # [8.1.0](https://github.com/thenativeweb/defekt/compare/8.0.0...8.1.0) (2022-01-17)
 
 
