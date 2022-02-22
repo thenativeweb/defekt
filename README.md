@@ -117,7 +117,7 @@ try {
 const error = new TokenMalformed({ data: { foo: 'bar' }});
 ```
 
-#### Hydrating errors
+#### Serializing and Hydrating errors
 
 Sometimes you need to serialize and deserialize your errors. Afterwards they are missing their prototype-chain and `Error`-related functionality. To restore those, you can hydrate a raw object to a `CustomError`-instance:
 
@@ -126,12 +126,16 @@ import { defekt, hydrateCustomError } from 'defekt';
 
 class TokenMalformed extends defekt({ code: 'TokenMalformed' }) {}
 
-const rawEx = JSON.parse(tokenMalformedErrorFromSomewhere);
+const serializedTokenMalformedError = JSON.stringify(new TokenMalformed());
+
+const rawEx = JSON.parse(serializedTokenMalformedError);
 
 const ex = hydrateCustomError({ rawEx, potentialErrorConstructors: [ TokenMalformed ] }).unwrapOrThrow();
 ```
 
 Note that the hydrated error is wrapped in a `Result`. If the raw error can not be hydrated using one of the given potential error constructors, an error-`Result` will be returned, which tells you, why the hydration was unsuccessful.
+
+Usually, JavaScript `Error`s are not well suited for JSON-serialization. To improve this, the `CustomError` class implements [`toJSON()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior), which defines custom JSON-serialization behavior. If you want to be able to serialize your `cause` and `data` as well, they need to be either plain objects or also implement the `toJSON` method.
 
 ### Using custom error type-guards
 
