@@ -57,7 +57,7 @@ suite('defekt', (): void => {
   test('creates a custom error with an optional cause.', async (): Promise<void> => {
     class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
 
-    const cause: unknown = {};
+    const cause = new Error('Foo.');
     const ex = new TokenInvalid({ cause });
 
     assert.that(ex.cause).is.equalTo(cause);

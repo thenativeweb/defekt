@@ -14,7 +14,7 @@ const defekt = function <TErrorCode extends string>({
 
     public constructor (
       messageOrMetadata: string | {
-        cause?: unknown;
+        cause?: Error;
         data?: any;
         message?: string;
       } = {}
