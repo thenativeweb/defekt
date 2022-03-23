@@ -8,7 +8,7 @@ interface ResultBase<TValue, TError extends Error> {
 
   unwrapOrThrow: (errorTransformer?: (err: TError) => Error) => TValue;
   unwrapOrElse: (handleError: (error: Error) => TValue) => TValue;
-  unwrapOrDefault: (defaultValue: TValue) => TValue;
+  unwrapOrDefault: <TDefault = TValue>(defaultValue: TDefault) => TValue | TDefault;
 
   unwrapErrorOrThrow: () => TError;
 }
@@ -35,7 +35,7 @@ const error = function <TValue, TError extends Error>(err: TError): ResultError<
     unwrapOrElse (handleError: (error: TError) => TValue): TValue {
       return handleError(err);
     },
-    unwrapOrDefault (defaultValue: TValue): TValue {
+    unwrapOrDefault <TDefault = TValue>(defaultValue: TDefault): TDefault {
       return defaultValue;
     },
     unwrapErrorOrThrow (): TError {
