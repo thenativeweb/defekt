@@ -1,3 +1,15 @@
+# [9.0.0](https://github.com/thenativeweb/defekt/compare/8.2.0...9.0.0) (2022-03-23)
+
+
+### Bug Fixes
+
+* Adjust CustomError.cause type to changes in TypeScript. ([#358](https://github.com/thenativeweb/defekt/issues/358)) ([a288ae1](https://github.com/thenativeweb/defekt/commit/a288ae1f5748c066717c7632dc5e00946868d860))
+
+
+### BREAKING CHANGES
+
+* This restricts the type of `cause` to `Error | undefined`.
+
 # [8.2.0](https://github.com/thenativeweb/defekt/compare/8.1.0...8.2.0) (2022-02-22)
 
 
