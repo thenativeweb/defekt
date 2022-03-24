@@ -211,6 +211,19 @@ suite('Result', (): void => {
 
       assert.that(unwrappedResult).is.equalTo(defaultValue);
     });
+
+    test('can use an arbitrary type as default.', async (): Promise<void> => {
+      // eslint-disable-next-line unicorn/error-message
+      const err = new Error();
+      const defaultValue = 5;
+
+      const result = error(err) as Result<Value, Error>;
+
+      const unwrappedResult: Value | number = result.unwrapOrDefault(defaultValue);
+
+      assert.that(unwrappedResult).is.equalTo(defaultValue);
+      assert.that(unwrappedResult).is.ofType('number');
+    });
   });
 
   suite('unwrapErrorOrThrow', (): void => {
