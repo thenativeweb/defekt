@@ -1,3 +1,10 @@
+# [9.1.0](https://github.com/thenativeweb/defekt/compare/9.0.0...9.1.0) (2022-03-24)
+
+
+### Features
+
+* Allow an arbitrary type as default in unwrapOrDefault. ([#359](https://github.com/thenativeweb/defekt/issues/359)) ([ff99448](https://github.com/thenativeweb/defekt/commit/ff99448913f48f68f55760970852a38475456f35))
+
 # [9.0.0](https://github.com/thenativeweb/defekt/compare/8.2.0...9.0.0) (2022-03-23)
 
 
