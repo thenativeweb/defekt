@@ -1,3 +1,10 @@
+## [9.1.1](https://github.com/thenativeweb/defekt/compare/9.1.0...9.1.1) (2022-03-25)
+
+
+### Bug Fixes
+
+* bump minimist from 1.2.5 to 1.2.6 ([#360](https://github.com/thenativeweb/defekt/issues/360)) ([4d5779b](https://github.com/thenativeweb/defekt/commit/4d5779b68dfce2ae56f23e892f602e7720bbdae3))
+
 # [9.1.0](https://github.com/thenativeweb/defekt/compare/9.0.0...9.1.0) (2022-03-24)
 
 
