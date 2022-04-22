@@ -335,7 +335,7 @@ You can also optionally let `hydrateResult` hydrate the contained error by passi
 
 ### Recognizing errors with `isError`
 
-The function `isError` is used to recognize anything that is derived from the built-in `Error` class. It relies solely on the prototype chain. Use it for example in a catch clause when trying to determine, wether what you have caught is actually an error:
+The function `isError` is used to recognize anything that is derived from the built-in `Error` class. It relies solely on the prototype chain. Use it for example in a `catch` clause when trying to determine, wether what you have caught is actually an error:
 
 ```typescript
 import { isError } from 'defekt';
@@ -344,7 +344,7 @@ try {
     // ...
 } catch (ex: unknown) {
     if (isError(ex)) {
-        // You can now access ex.message, ex.stack etc.
+        // You can now access ex.message, ex.stack, ...
     }
 }
 ```
@@ -362,12 +362,12 @@ try {
     // ...
 } catch (ex: unknown) {
     if (isCustomError(ex)) {
-        // You can now access ex.message, ex.stack etc but also ex.code.
+        // You can now access ex.message, ex.stack, ..., but also ex.code.
     }
 }
 ```
 
-Or you can pass a `CustomError`-constructor to make sure you have a specific type of error in hand:
+Or you can pass a `CustomError` constructor to make sure you have a specific type of error in hand:
 
 ```typescript
 import { defekt, isCustomError } from 'defekt';
@@ -385,7 +385,7 @@ try {
 
 ### Making sure something is an error or wrapping it, if not, using `ensureUnknownIsError`
 
-One of the greatest regrets of JavaScript is the ability to throw anything. If you want to bullet-proof your error handling, you need to check that what you catch in a catch-clause is actually an `Error`. `ensureUnknownIsError` takes something you caught and wraps it in an `Error` if necessary. If the caught thing already is an `Error`, `ensureUnknownIsError` returns it unchanged.
+One of the greatest regrets of JavaScript is the ability to throw anything. If you want to bullet-proof your error handling, you need to check that what you catch in a `catch` clause is actually an `Error`. `ensureUnknownIsError` takes something you caught and wraps it in an `Error` if necessary. If the caught thing already is an `Error`, `ensureUnknownIsError` returns it unchanged.
 
 ```typescript
 import {ensureUnknownIsError} from "./ensureUnknownIsError";
