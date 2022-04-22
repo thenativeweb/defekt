@@ -319,13 +319,13 @@ const rawResult = JSON.parse(resultFromSomewhere);
 const hydrationResult = hydrateResult({ rawResult });
 
 if (hydrationResult.hasError()) {
-    // The hydration has failed.
+  // The hydration has failed.
 } else {
-    const result = hydrationResult.value;
-    
-    if (result.hasError()) {
-        // Continue with your normal error handling.
-    }
+  const result = hydrationResult.value;
+
+  if (result.hasError()) {
+    // Continue with your normal error handling.
+  }
 }
 ```
 
@@ -341,11 +341,11 @@ The function `isError` is used to recognize anything that is derived from the bu
 import { isError } from 'defekt';
 
 try {
-    // ...
+  // ...
 } catch (ex: unknown) {
-    if (isError(ex)) {
-        // You can now access ex.message, ex.stack, ...
-    }
+  if (isError(ex)) {
+    // You can now access ex.message, ex.stack, ...
+  }
 }
 ```
 
@@ -359,11 +359,11 @@ You can either identify a general `CustomError`:
 import { isCustomError } from 'defekt';
 
 try {
-    // ...
+  // ...
 } catch (ex: unknown) {
-    if (isCustomError(ex)) {
-        // You can now access ex.message, ex.stack, ..., but also ex.code.
-    }
+  if (isCustomError(ex)) {
+    // You can now access ex.message, ex.stack, ..., but also ex.code.
+  }
 }
 ```
 
@@ -375,11 +375,11 @@ import { defekt, isCustomError } from 'defekt';
 class MyCustomError extends defekt({ code: 'MyCustomError' }) {}
 
 try {
-    // ...
+  // ...
 } catch (ex: unknown) {
-    if (isCustomError(ex, MyCustomError)) {
-        // In this block ex is of type `MyCustomError`.
-    }
+  if (isCustomError(ex, MyCustomError)) {
+    // In this block ex is of type `MyCustomError`.
+  }
 }
 ```
 
@@ -391,12 +391,12 @@ One of the greatest regrets of JavaScript is the ability to throw anything. If y
 import {ensureUnknownIsError} from "./ensureUnknownIsError";
 
 try {
-    // ...
+  // ...
 } catch (ex: unknown) {
-    const error = ensureUnknownIsError({ error: ex });
-    
-    // Now you can go on with your usual error handling and rest assured, that
-    // `error` is actually an `Error`.
+  const error = ensureUnknownIsError({ error: ex });
+
+  // Now you can go on with your usual error handling and rest assured, that
+  // `error` is actually an `Error`.
 }
 ```
 
