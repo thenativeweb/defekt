@@ -1,6 +1,7 @@
 import { CustomError } from './CustomError';
 import { CustomErrorConstructor } from './CustomErrorConstructor';
 import { defekt } from './defekt';
+import { ensureUnknownIsError } from './ensureUnknownIsError';
 import { hydrateResult } from './hydrateResult';
 import { isCustomError } from './isCustomError';
 import { isError } from './isError';
@@ -11,6 +12,7 @@ import { hydrateCustomError, HydratingErrorFailed } from './hydrateCustomError';
 export {
   CustomError,
   defekt,
+  ensureUnknownIsError,
   error,
   hydrateCustomError,
   HydratingErrorFailed,
