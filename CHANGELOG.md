@@ -1,3 +1,10 @@
+# [9.2.0](https://github.com/thenativeweb/defekt/compare/9.1.1...9.2.0) (2022-06-01)
+
+
+### Features
+
+* Implement ensureUnknownIsError and extend readme. ([#363](https://github.com/thenativeweb/defekt/issues/363)) ([0abf81d](https://github.com/thenativeweb/defekt/commit/0abf81da1067b68f2d5f90029f1180aebbfbf4eb))
+
 ## [9.1.1](https://github.com/thenativeweb/defekt/compare/9.1.0...9.1.1) (2022-03-25)
 
 
