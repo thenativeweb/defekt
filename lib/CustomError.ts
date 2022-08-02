@@ -1,13 +1,13 @@
-class CustomError<TErrorName extends string = string> extends Error {
-  public code: TErrorName;
+class CustomError<TDataType = any, TErrorCode extends string = string> extends Error {
+  public code: TErrorCode;
 
-  public data?: any;
+  public data?: TDataType;
 
   public constructor ({ code, message, cause, data }: {
-    code: TErrorName;
+    code: TErrorCode;
     message: string;
     cause?: Error;
-    data?: any;
+    data?: TDataType;
   }) {
     super(message);
 

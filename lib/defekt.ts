@@ -2,20 +2,20 @@ import { CustomError } from './CustomError';
 import { CustomErrorConstructor } from './CustomErrorConstructor';
 import { formatErrorMessage } from './formatErrorMessage';
 
-const defekt = function <TErrorCode extends string>({
+const defekt = function <TDataType = any, TErrorCode extends string = string>({
   code,
   defaultMessage
 }: {
   code: TErrorCode;
   defaultMessage?: string;
-}): CustomErrorConstructor<TErrorCode> {
-  return class extends CustomError<TErrorCode> {
+}): CustomErrorConstructor<TDataType, TErrorCode> {
+  return class extends CustomError<TDataType, TErrorCode> {
     public static code: TErrorCode = code;
 
     public constructor (
       messageOrMetadata: string | {
         cause?: Error;
-        data?: any;
+        data?: TDataType;
         message?: string;
       } = {}
     ) {
