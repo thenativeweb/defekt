@@ -1,3 +1,10 @@
+# [9.3.0](https://github.com/thenativeweb/defekt/compare/9.2.0...9.3.0) (2022-08-09)
+
+
+### Features
+
+* Allow type-definition of CustomError.data ([#366](https://github.com/thenativeweb/defekt/issues/366)) ([23f5b25](https://github.com/thenativeweb/defekt/commit/23f5b259558781cbb92e3c33a187f12e74965799))
+
 # [9.2.0](https://github.com/thenativeweb/defekt/compare/9.1.1...9.2.0) (2022-06-01)
 
 
