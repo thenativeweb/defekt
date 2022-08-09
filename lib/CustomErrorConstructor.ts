@@ -1,9 +1,9 @@
 import { CustomError } from './CustomError';
 
-interface CustomErrorConstructor<TDataType = any, TErrorCode extends string = string> {
+interface CustomErrorConstructor<TData = any, TErrorCode extends string = string> {
   new(
-    parameters?: string | { cause?: Error; data?: TDataType; message?: string }
-  ): CustomError<TDataType, TErrorCode>;
+    parameters?: string | { cause?: Error; data?: TData; message?: string }
+  ): CustomError<TData, TErrorCode>;
 
   code: string;
 }
