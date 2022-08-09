@@ -171,4 +171,13 @@ suite('defekt', (): void => {
       stack: ex.stack
     }));
   });
+
+  test('creates a custom error that has typed data.', async (): Promise<void> => {
+    class MyCustomDefekt extends defekt<{ attrA: string; attrB: number }>({ code: 'MyCustomDefekt' }) {}
+
+    const ex = new MyCustomDefekt({ data: { attrA: 'data', attrB: 2 }});
+
+    assert.that(ex.data?.attrA).is.equalTo('data');
+    assert.that(ex.data?.attrB).is.equalTo(2);
+  });
 });
