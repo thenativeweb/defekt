@@ -2,10 +2,10 @@ import { CustomError } from './CustomError';
 import { CustomErrorConstructor } from './CustomErrorConstructor';
 import { isError } from './isError';
 
-const isCustomError = function <TErrorName extends string>(
+const isCustomError = function <TData, TErrorName extends string>(
   ex: any,
-  errorType?: CustomErrorConstructor<TErrorName>
-): ex is CustomError<TErrorName> {
+  errorType?: CustomErrorConstructor<TData, TErrorName>
+): ex is CustomError<TData, TErrorName> {
   return (
     isError(ex) &&
       ex instanceof CustomError &&
