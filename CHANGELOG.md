@@ -1,3 +1,10 @@
+## [9.3.1](https://github.com/thenativeweb/defekt/compare/9.3.0...9.3.1) (2022-09-02)
+
+
+### Bug Fixes
+
+* Infer type correctly from unknown ([#369](https://github.com/thenativeweb/defekt/issues/369)) ([3d97a75](https://github.com/thenativeweb/defekt/commit/3d97a75643c54f08319778e7cae3433b310c16ae))
+
 # [9.3.0](https://github.com/thenativeweb/defekt/compare/9.2.0...9.3.0) (2022-08-09)
 
 
