@@ -95,4 +95,44 @@ suite('isCustomError', (): void => {
       assertIsCustomError(ex);
     }
   });
+
+  test('acts as a type guard for specific custom errors starting from an error with type unknown.', async (): Promise<void> => {
+    class TokenInvalid extends defekt({ code: 'TokenInvalid' }) {}
+
+    const ex: unknown = 'some-arbitrary-value';
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
+    const assertIsCustomError = function (ex2: TokenInvalid): void {};
+
+    if (isCustomError(ex, TokenInvalid)) {
+      assertIsCustomError(ex);
+    }
+  });
+
+  test('acts as a type guard for specific custom errors with a set type for data.', async (): Promise<void> => {
+    class TokenInvalid extends defekt<string>({ code: 'TokenInvalid' }) {}
+
+    const ex: unknown = 'some-arbitrary-value';
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
+    const assertIsCustomError = function (ex2: TokenInvalid): void {};
+
+    if (isCustomError(ex, TokenInvalid)) {
+      assertIsCustomError(ex);
+    }
+  });
+
+  test('infers the type of the data attribute.', async (): Promise<void> => {
+    type Data = string;
+    class TokenInvalid extends defekt<Data>({ code: 'TokenInvalid' }) {}
+
+    const ex: unknown = 'some-arbitrary-value';
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
+    const assertIsData = function (data: Data | undefined): void {};
+
+    if (isCustomError(ex, TokenInvalid)) {
+      assertIsData(ex.data);
+    }
+  });
 });
